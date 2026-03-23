@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word → Moodle · Bomberos CAM</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<style>
+:root {
+  --bg:#f0f2f5;
+  --surface:#ffffff;
+  --panel:#f7f8fa;
+  --border:#e4e7ec;
+  --border2:#c9cfd8;
+  --red:#C0272D;
+  --red-h:#9b1e23;
+  --red-s:rgba(192,39,45,.08);
+  --red-glow:rgba(192,39,45,.2);
+  --text:#111827;
+  --muted:#6b7280;
+  --sub:#9ca3af;
+  --success:#16a34a;
+  --warn:#d97706;
+  --radius:12px;
+  --font-ui:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;
+  --font-hd:'Barlow Condensed','Impact',sans-serif;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-ui);font-size:14px;display:flex;flex-direction:column;}
+
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+
+/* ── HEADER ── */
+header{
+  flex-shrink:0;height:54px;
+  background:var(--red);
+  display:flex;align-items:center;padding:0 20px;gap:12px;
+  box-shadow:0 2px 10px rgba(192,39,45,.35);
+  z-index:100;
+}
+.h-badge{font-size:24px;flex-shrink:0;}
+.h-title{font-family:var(--font-hd);font-size:22px;font-weight:800;
+  letter-spacing:1px;text-transform:uppercase;color:#fff;}
+.h-title em{color:rgba(255,255,255,.6);font-style:normal;}
+.h-divider{width:1px;height:24px;background:rgba(255,255,255,.2);}
+.h-corp{font-family:var(--font-hd);font-size:12px;font-weight:600;
+  letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.65);}
+.h-pill{margin-left:auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+  border-radius:20px;padding:4px 12px;font-size:10px;font-family:var(--font-hd);
+  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.85);}
+
+/* ── MAIN GRID — una sola columna ── */
+main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0;}
+
+/* ── LEFT COLUMN — ocupa todo ── */
+.left-col{display:flex;flex-direction:column;overflow:hidden;background:var(--bg);flex:1;}
+
+/* ── UPLOAD ZONE ── */
+.upload-zone{
+  flex-shrink:0;padding:10px 14px;
+  background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.btn-upload{
+  display:flex;align-items:center;gap:7px;padding:8px 16px;
+  background:var(--red);border:none;border-radius:8px;
+  color:#fff;font-size:12px;font-family:var(--font-hd);font-weight:700;
+  letter-spacing:.5px;cursor:pointer;transition:all .18s;
+  text-transform:uppercase;white-space:nowrap;
+  box-shadow:0 2px 6px rgba(192,39,45,.25);flex-shrink:0;
+}
+.btn-upload:hover{background:var(--red-h);box-shadow:0 4px 12px rgba(192,39,45,.35);transform:translateY(-1px);}
+.btn-upload input[type=file]{display:none;}
+.upload-hint{font-size:12px;color:var(--muted);line-height:1.5;}
+.upload-hint strong{color:var(--text);}
+
+/* ── TOOLBAR ── */
+.toolbar{
+  flex-shrink:0;background:var(--surface);border-bottom:2px solid var(--border);
+  padding:8px 14px;display:flex;flex-direction:column;gap:5px;
+}
+.toolbar-section{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.toolbar-label{
+  font-size:9px;font-family:var(--font-hd);font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);
+  min-width:50px;flex-shrink:0;
+}
+.toolbar-sep{width:1px;height:18px;background:var(--border);margin:0 4px;flex-shrink:0;}
+.btn-el{
+  padding:5px 9px;font-size:11px;font-family:var(--font-hd);
+  font-weight:700;letter-spacing:.3px;
+  color:#fff;border:none;border-radius:6px;cursor:pointer;
+  transition:all .12s;display:flex;align-items:center;gap:3px;
+  white-space:nowrap;
+}
+.btn-el:hover{filter:brightness(1.12);transform:translateY(-1px);
+  box-shadow:0 3px 8px rgba(0,0,0,.18);}
+.be-h1{background:#C0272D;} .be-h2{background:#8E1B1F;} .be-h3{background:#b45309;}
+.be-h4{background:#92400e;} .be-body{background:#475569;}
+.be-goal{background:#2e7d32;} .be-think{background:#7b1fa2;}
+.be-note{background:#c2410c;} .be-info{background:#0277bd;} .be-tip{background:#0d9488;}
+.be-step{background:#4338ca;} .be-quote{background:#546e7a;} .be-extra{background:#6b7280;}
+.be-list{background:#374151;} .be-table{background:#1565c0;} .be-sep{background:#94a3b8;}
+.be-img{background:#0e7490;} .be-video{background:#7c3aed;} .be-pdf{background:#b91c1c;}
+
+/* ── BARRA DE FORMATO ── */
+.format-bar{
+  flex-shrink:0;background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:5px 14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+}
+.format-label{
+  font-size:9px;font-family:var(--font-hd);font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--sub);
+  flex-shrink:0;min-width:46px;
+}
+.format-group{display:flex;gap:2px;}
+.format-sep{width:1px;height:20px;background:var(--border2);margin:0 4px;}
+.fmt-btn{
+  min-width:32px;height:28px;padding:0 8px;
+  background:var(--panel);border:1px solid var(--border);border-radius:5px;
+  font-size:13px;cursor:pointer;color:var(--text);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .12s;font-family:var(--font-ui);
+}
+.fmt-btn:hover{background:var(--border);border-color:var(--border2);}
+.fmt-btn:active{background:var(--border2);transform:scale(.95);}
+.fmt-btn.active{background:var(--red-s);border-color:var(--red);color:var(--red);}
+
+/* ── EDITOR ── */
+.editor-wrap{flex:1;overflow-y:auto;padding:14px;background:var(--bg);}
+.editor-area{
+  background:#fff;border-radius:var(--radius);
+  min-height:240px;padding:22px 26px;
+  font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#1f2937;
+  outline:none;cursor:text;word-break:break-word;
+  box-shadow:var(--shadow);border:1.5px solid var(--border);
+  transition:border-color .2s, box-shadow .2s;
+}
+.editor-area:focus{
+  border-color:var(--red);
+  box-shadow:0 0 0 3px var(--red-s),var(--shadow);
+}
+.editor-area[data-placeholder]:empty::before{
+  content:attr(data-placeholder);color:#c4c9d4;font-style:italic;pointer-events:none;
+}
+.editor-area p{margin:8px 0;}
+.editor-area.dragover{border:2px dashed var(--red)!important;background:#fff9f9!important;}
+
+/* ── ACTION BAR ── */
+.action-bar{
+  flex-shrink:0;padding:8px 14px;
+  background:var(--surface);border-top:1px solid var(--border);
+  display:flex;gap:8px;align-items:center;
+}
+.btn-action{
+  font-size:11px;font-family:var(--font-hd);font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;
+  background:none;border:1px solid var(--border2);border-radius:6px;
+  padding:5px 14px;cursor:pointer;transition:all .15s;color:var(--muted);
+}
+.btn-action.clear:hover{color:var(--red);border-color:var(--red);background:var(--red-s);}
+
+/* Copy button */
+.btn-copy{
+  padding:8px 22px;background:var(--red);color:#fff;border:none;
+  border-radius:8px;font-family:var(--font-hd);font-size:13px;font-weight:800;
+  letter-spacing:1px;text-transform:uppercase;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s;box-shadow:0 2px 8px rgba(192,39,45,.25);
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.btn-copy::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);
+  transform:translateX(-100%);transition:transform .5s;
+}
+.btn-copy:hover::before{transform:translateX(100%);}
+.btn-copy:hover{background:var(--red-h);transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(192,39,45,.4);}
+.btn-copy:active{transform:translateY(0);}
+.btn-copy:disabled{
+  background:var(--border2);color:var(--sub);cursor:not-allowed;
+  transform:none;box-shadow:none;
+}
+.btn-copy:disabled::before{display:none;}
+
+/* Copy success overlay */
+.copy-success{
+  display:none;position:absolute;inset:0;background:rgba(22,163,74,.96);
+  border-radius:8px;
+  align-items:center;justify-content:center;flex-direction:column;gap:4px;z-index:10;
+}
+.copy-success.show{display:flex;}
+.copy-success .cs-icon{font-size:22px;}
+.copy-success .cs-text{color:#fff;font-family:var(--font-hd);font-size:15px;
+  font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.copy-success .cs-sub{color:rgba(255,255,255,.9);font-size:10px;text-align:center;}
+
+/* Modals */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(6px);
+  z-index:2000;align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:#fff;border:1px solid var(--border);border-radius:16px;
+  width:90%;max-width:460px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.18);
+}
+.modal-hdr{
+  padding:16px 20px;background:var(--panel);border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--font-hd);font-size:15px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--text);
+}
+.modal-close{
+  background:var(--border);border:none;color:var(--muted);width:26px;height:26px;
+  border-radius:50%;cursor:pointer;font-size:13px;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
+.modal-close:hover{background:var(--red);color:#fff;}
+.modal-pad{padding:20px;display:flex;flex-direction:column;gap:14px;}
+.modal-row{display:flex;gap:12px;}
+.modal-row>div{flex:1;}
+.modal-label{
+  display:block;font-size:10px;font-weight:700;color:var(--muted);
+  margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em;
+}
+.modal-input{
+  width:100%;padding:9px 12px;border:1.5px solid var(--border2);border-radius:8px;
+  font-size:14px;outline:none;font-family:inherit;
+  background:#fff;color:var(--text);transition:border-color .2s;
+}
+.modal-input:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--red-s);}
+.modal-check{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;color:var(--muted);}
+.modal-btns{display:flex;gap:8px;}
+.modal-btn{
+  flex:1;padding:11px;border:none;border-radius:8px;
+  font-family:var(--font-hd);font-size:13px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:all .15s;
+}
+.modal-btn-red{background:var(--red);color:#fff;}
+.modal-btn-red:hover{background:var(--red-h);}
+.modal-btn-gray{background:var(--panel);color:var(--muted);border:1px solid var(--border2);}
+.modal-btn-gray:hover{background:var(--border);color:var(--text);}
+.modal-hint{font-size:11px;color:var(--muted);line-height:1.5;
+  background:var(--panel);border-radius:6px;padding:8px 10px;border:1px solid var(--border);}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  background:var(--text);color:#fff;padding:10px 22px;border-radius:50px;
+  font-weight:600;font-size:12px;opacity:0;pointer-events:none;
+  transition:opacity .25s;white-space:nowrap;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:9999;
+}
+.toast.show{opacity:1;}
+
+.be-practice{background:#0f766e;}
+
+/* Action bar buttons */
+.btn-action.undo:hover{color:#2563eb;border-color:#2563eb;background:rgba(37,99,235,.06);}
+.btn-action.help{color:var(--muted);}
+.btn-action.help:hover{color:#7c3aed;border-color:#7c3aed;background:rgba(124,58,237,.06);}
+.btn-action.clear:hover{color:var(--red);border-color:var(--red);background:var(--red-s);}
+
+/* Help modal */
+.help-modal{
+  background:#fff;border-radius:16px;width:92%;max-width:620px;
+  max-height:88vh;display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.2);
+}
+.help-modal-hdr{
+  flex-shrink:0;padding:16px 20px;background:var(--panel);
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--font-hd);font-size:16px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--text);
+}
+.help-modal-body{flex:1;overflow-y:auto;padding:20px;}
+.help-intro{font-size:13px;color:var(--muted);margin-bottom:16px;}
+
+/* Help cards grid */
+.help-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;
+}
+.help-card{
+  background:var(--panel);border:1.5px solid var(--border);border-radius:10px;
+  padding:16px 12px;cursor:pointer;transition:all .15s;
+  display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+}
+.help-card:hover{border-color:var(--red);background:var(--red-s);transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(192,39,45,.12);}
+.hc-icon{font-size:26px;}
+.hc-title{font-size:13px;font-weight:700;color:var(--text);}
+.hc-sub{font-size:11px;color:var(--muted);line-height:1.4;}
+
+/* Help section detail */
+.help-back{
+  display:inline-flex;align-items:center;gap:6px;
+  background:none;border:1px solid var(--border2);border-radius:6px;
+  padding:5px 14px;font-size:12px;font-family:var(--font-hd);font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;
+  margin-bottom:18px;transition:all .15s;
+}
+.help-back:hover{color:var(--text);border-color:var(--text);}
+.help-section-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;}
+.help-section-body{font-size:13px;color:var(--muted);line-height:1.75;}
+.help-section-body p{margin-bottom:10px;}
+.help-section-body strong{color:var(--text);}
+.help-section-body ol,.help-section-body ul{padding-left:20px;margin-bottom:10px;}
+.help-section-body li{margin-bottom:6px;}
+.help-tip{
+  background:var(--red-s);border-left:4px solid var(--red);border-radius:0 6px 6px 0;
+  padding:10px 14px;margin-top:12px;font-size:12px;color:var(--text);
+}
+
+kbd{
+  display:inline-block;padding:1px 6px;background:var(--panel);
+  border:1px solid var(--border2);border-radius:4px;
+  font-family:monospace;font-size:11px;color:var(--text);
+}
+
+/* Image file picker */
+.img-file-label{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px;border:2px dashed var(--border2);border-radius:8px;
+  cursor:pointer;font-size:13px;color:var(--muted);transition:all .15s;
+  background:var(--panel);
+}
+.img-file-label:hover{border-color:var(--red);color:var(--red);background:var(--red-s);}
+.img-file-label.has-file{border-style:solid;border-color:var(--success);color:var(--success);}
+
+/* Stats — solo para JS interno, nunca visibles */
+.stats-bar,.stat{display:none;}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="h-badge">🔥</div>
+  <div class="h-title">Word <em>→</em> Moodle</div>
+  <div class="h-divider"></div>
+  <div class="h-corp">Bomberos · C.A.M.</div>
+  <div class="h-pill">v6 · Herramienta interna</div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main>
+
+  <!-- ─── COLUMNA IZQUIERDA ─── -->
+  <div class="left-col">
+
+    <!-- Zona de carga de archivo -->
+    <div class="upload-zone">
+      <label class="btn-upload">
+        📂 Abrir Word (.docx)
+        <input type="file" id="file-input" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+      </label>
+      <span class="upload-hint">O pega con <strong>Ctrl+V</strong> · O escribe directamente abajo</span>
+    </div>
+
+    <!-- Barra de herramientas de elementos -->
+    <div class="toolbar">
+      <div class="toolbar-section">
+        <span class="toolbar-label">Títulos</span>
+        <button class="btn-el be-h1" onclick="addBlock('h1')">H1</button>
+        <button class="btn-el be-h2" onclick="addBlock('h2')">H2</button>
+        <button class="btn-el be-h3" onclick="addBlock('h3')">H3</button>
+        <button class="btn-el be-h4" onclick="addBlock('h4')">H4</button>
+        <button class="btn-el be-body" onclick="addBlock('body')">¶ Párrafo</button>
+        <div class="toolbar-sep"></div>
+        <span class="toolbar-label">Listas</span>
+        <button class="btn-el be-list"  onclick="addBlock('list')">📋 Lista</button>
+        <button class="btn-el be-table" onclick="openTableModal()">📊 Tabla</button>
+        <button class="btn-el be-sep"   onclick="addBlock('divider')">— Línea divisoria</button>
+      </div>
+      <div class="toolbar-section">
+        <span class="toolbar-label">Bloques</span>
+        <button class="btn-el be-goal"  onclick="addBlock('goal')">🎯 Objetivo</button>
+        <button class="btn-el be-think" onclick="addBlock('think')">🤔 Reflexión</button>
+        <button class="btn-el be-note"  onclick="addBlock('note')">⚠️ Aviso</button>
+        <button class="btn-el be-info"  onclick="addBlock('info')">ℹ️ Info</button>
+        <button class="btn-el be-tip"   onclick="addBlock('tip')">💡 Consejo</button>
+        <button class="btn-el be-step"  onclick="addBlock('step')">🔢 Paso</button>
+        <button class="btn-el be-practice" onclick="addBlock('practice')">🛠️ Práctica</button>
+        <button class="btn-el be-quote" onclick="addBlock('quote')">«» Cita</button>
+        <button class="btn-el be-extra" onclick="addBlock('extra')">📚 Extra</button>
+      </div>
+      <div class="toolbar-section">
+        <span class="toolbar-label">Recursos</span>
+        <button class="btn-el be-img"   onclick="openMediaModal('img')">🖼️ Imagen</button>
+        <button class="btn-el be-img"   onclick="openMediaModal('imgurl')" style="background:#0e9488;">🔗 Imagen URL</button>
+        <button class="btn-el be-video" onclick="openMediaModal('video')">🎬 Vídeo</button>
+        <button class="btn-el be-pdf"   onclick="openMediaModal('pdf')">📄 PDF</button>
+      </div>
+    </div>
+
+    <!-- Barra de formato de texto -->
+    <div class="format-bar">
+      <span class="format-label">Formato</span>
+      <div class="format-group">
+        <button class="fmt-btn" onclick="applyFmt('bold')" title="Negrita (Ctrl+B)"><strong>N</strong></button>
+        <button class="fmt-btn" onclick="applyFmt('italic')" title="Cursiva (Ctrl+I)"><em>K</em></button>
+        <button class="fmt-btn" onclick="applyFmt('underline')" title="Subrayado (Ctrl+U)"><u>S</u></button>
+      </div>
+      <div class="format-sep"></div>
+      <div class="format-group">
+        <button class="fmt-btn" onclick="applyFmt('justifyLeft')"   title="Alinear a la izquierda">⬛▪▪</button>
+        <button class="fmt-btn" onclick="applyFmt('justifyCenter')" title="Centrar">▪⬛▪</button>
+        <button class="fmt-btn" onclick="applyFmt('justifyRight')"  title="Alinear a la derecha">▪▪⬛</button>
+      </div>
+      <div class="format-sep"></div>
+      <div class="format-group">
+        <button class="fmt-btn" onclick="applyFmt('removeFormat')" title="Quitar formato" style="font-size:11px;letter-spacing:0;">✕ Quitar formato</button>
+      </div>
+    </div>
+
+    <!-- Editor principal -->
+    <div class="editor-wrap">
+      <div id="editor" class="editor-area" contenteditable="true" spellcheck="true"
+           data-placeholder="Escribe aquí, pega con Ctrl+V desde Word, abre un .docx, o arrastra una imagen..."></div>
+    </div>
+
+    <!-- Stats (ocultas — solo para JS) -->
+    <div class="stats-bar">
+      <div class="stat" id="s-h1">H1</div><div class="stat" id="s-h2">H2</div>
+      <div class="stat" id="s-h3">H3</div><div class="stat" id="s-h4">H4+</div>
+      <div class="stat" id="s-p">P</div><div class="stat" id="s-li">L</div>
+      <div class="stat" id="s-tb">T</div>
+      <button id="btn-refresh" style="display:none;" onclick="manualRefresh()">↻</button>
+    </div>
+
+    <!-- Barra de acciones -->
+    <div class="action-bar">
+      <button class="btn-action undo" onclick="doUndo()" title="Deshacer (Ctrl+Z)">↩ Deshacer</button>
+      <button class="btn-action undo" onclick="doRedo()" title="Rehacer (Ctrl+Y)">↪ Rehacer</button>
+      <button class="btn-action help" onclick="openHelp()" title="Cómo usar esta herramienta">❓ Cómo usar</button>
+      <button class="btn-action clear" onclick="clearAll()">✕ Limpiar todo</button>
+      <div style="flex:1;"></div>
+      <div style="position:relative;">
+        <button class="btn-copy" id="btn-copy" onclick="copyHTML()" disabled
+          style="padding:8px 22px;font-size:13px;letter-spacing:1px;border-radius:8px;box-shadow:0 2px 8px rgba(192,39,45,.25);">
+          📋 Copiar para pegar en Moodle
+        </button>
+        <div class="copy-success" id="copy-success" style="margin:0;border-radius:8px;">
+          <span class="cs-icon" style="font-size:20px;">✅</span>
+          <span class="cs-text" style="font-size:14px;">¡Copiado!</span>
+          <span class="cs-sub">Pega con Ctrl+V en el editor HTML de Moodle</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- ── MODAL TABLA ── -->
+<div class="modal-overlay" id="tableModal">
+  <div class="modal">
+    <div class="modal-hdr"><span>📊 Configurar tabla</span><button class="modal-close" onclick="closeTableModal()">✕</button></div>
+    <div class="modal-pad">
+      <div class="modal-row">
+        <div><label class="modal-label">Columnas</label><input id="tableCols" class="modal-input" type="number" min="1" max="10" value="3"></div>
+        <div><label class="modal-label">Filas de datos</label><input id="tableRows" class="modal-input" type="number" min="1" max="30" value="3"></div>
+      </div>
+      <label class="modal-check"><input type="checkbox" id="tableHeader" checked style="width:15px;height:15px;cursor:pointer;accent-color:var(--red);">Incluir fila de cabecera</label>
+      <div class="modal-btns">
+        <button class="modal-btn modal-btn-gray" onclick="closeTableModal()">Cancelar</button>
+        <button class="modal-btn modal-btn-red"  onclick="confirmTable()">Insertar tabla</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL AYUDA ── -->
+<div class="modal-overlay" id="helpModal">
+  <div class="help-modal">
+    <div class="help-modal-hdr">
+      <span>❓ Guía de uso</span>
+      <button class="modal-close" onclick="closeHelp()" style="width:32px;height:32px;font-size:16px;">✕</button>
+    </div>
+    <div class="help-modal-body" id="helpBody">
+
+      <!-- VISTA: TARJETAS -->
+      <div id="helpCards">
+        <p class="help-intro">Pulsa cualquier tarjeta para ver una explicación detallada.</p>
+        <div class="help-grid">
+          <div class="help-card" onclick="showHelpSection('s1')">
+            <span class="hc-icon">📝</span>
+            <span class="hc-title">Crear contenido</span>
+            <span class="hc-sub">Escribir, pegar desde Word, abrir .docx</span>
+          </div>
+          <div class="help-card" onclick="showHelpSection('s2')">
+            <span class="hc-icon">🧩</span>
+            <span class="hc-title">Bloques especiales</span>
+            <span class="hc-sub">Objetivos, avisos, pasos, prácticas...</span>
+          </div>
+          <div class="help-card" onclick="showHelpSection('s3')">
+            <span class="hc-icon">🖼️</span>
+            <span class="hc-title">Imágenes</span>
+            <span class="hc-sub">Cómo insertar y configurar imágenes</span>
+          </div>
+          <div class="help-card" onclick="showHelpSection('s4')">
+            <span class="hc-icon">🎬</span>
+            <span class="hc-title">Vídeos</span>
+            <span class="hc-sub">Insertar vídeos desde la Mediateca</span>
+          </div>
+          <div class="help-card" onclick="showHelpSection('s5')">
+            <span class="hc-icon">📄</span>
+            <span class="hc-title">PDF</span>
+            <span class="hc-sub">Incrustar documentos PDF en Moodle</span>
+          </div>
+          <div class="help-card" onclick="showHelpSection('s6')">
+            <span class="hc-icon">📊</span>
+            <span class="hc-title">Tablas</span>
+            <span class="hc-sub">Crear y editar tablas</span>
+          </div>
+          <div class="help-card" onclick="showHelpSection('s7')">
+            <span class="hc-icon">📋</span>
+            <span class="hc-title">Copiar a Moodle</span>
+            <span class="hc-sub">Cómo pegar el resultado en Moodle</span>
+          </div>
+          <div class="help-card" onclick="showHelpSection('s8')">
+            <span class="hc-icon">⌨️</span>
+            <span class="hc-title">Atajos de teclado</span>
+            <span class="hc-sub">Comandos rápidos para trabajar mejor</span>
+          </div>
+          <div class="help-card" onclick="showHelpSection('s9')">
+            <span class="hc-icon">✉️</span>
+            <span class="hc-title">Contacto</span>
+            <span class="hc-sub">Incidencias y sugerencias</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIONES DETALLE -->
+      <div id="helpSection" style="display:none;">
+        <button class="help-back" onclick="showHelpCards()">← Volver</button>
+        <div id="helpSectionContent"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ── MODAL MULTIMEDIA (imagen / vídeo / PDF) ── -->
+<div class="modal-overlay" id="mediaModal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <span id="mediaModal-title">Insertar recurso</span>
+      <button class="modal-close" onclick="closeMediaModal()">✕</button>
+    </div>
+    <div class="modal-pad">
+      <!-- Para imagen: selector de archivo (oculto por JS para vídeo/PDF) -->
+      <div id="mediaFileRow" style="display:none;">
+        <label class="modal-label">Selecciona una imagen de tu equipo</label>
+        <label class="img-file-label" id="imgFileLabel">
+          📁 Elegir imagen...
+          <input type="file" id="mediaFileInput" accept="image/*" style="display:none;">
+        </label>
+        <div id="imgPreviewWrap" style="display:none;margin-top:8px;text-align:center;">
+          <img id="imgPreview" style="max-height:120px;max-width:100%;border-radius:6px;border:1px solid var(--border);">
+          <p id="imgFileInfo" style="font-size:11px;color:var(--muted);margin-top:4px;"></p>
+        </div>
+      </div>
+      <!-- Para vídeo/PDF: campo URL -->
+      <div id="mediaUrlRow">
+        <label class="modal-label" id="mediaModal-label">URL del recurso</label>
+        <input id="mediaUrl" class="modal-input" type="url"
+          style="font-size:13px;text-align:left;font-weight:400;letter-spacing:0;"
+          placeholder="https://...">
+      </div>
+      <div id="mediaExtra"></div>
+      <p id="mediaModal-hint" class="modal-hint"></p>
+      <div class="modal-btns">
+        <button class="modal-btn modal-btn-gray" onclick="closeMediaModal()">Cancelar</button>
+        <button class="modal-btn modal-btn-red"  onclick="confirmMedia()">Insertar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  ESTADO GLOBAL — cursor / foco en workspace
+// ══════════════════════════════════════════════════════════════
+let lastFocusedBlock = null;   // el .block-wrapper que tenía el foco antes de pulsar un botón de elemento
+
+// ══════════════════════════════════════════════════════════════
+//  ESTILOS DE EXPORTACIÓN MOODLE (inline, TinyMCE/Atto compatible)
+// ══════════════════════════════════════════════════════════════
+const EX = {
+  // ── ENCABEZADOS ──────────────────────────────────────────────
+  // H1: rojo corporativo sólido, tipografía clara, radio más contenido
+  h1:   'display:inline-block;background-color:#C0272D;color:#ffffff;padding:12px 24px;border-radius:6px;font-family:Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:0.3px;line-height:1.3;',
+  // H2: rojo oscuro, ligeramente más pequeño, misma solidez
+  h2:   'display:inline-block;background-color:#8E1B1F;color:#ffffff;padding:10px 20px;border-radius:6px;font-family:Arial,sans-serif;font-size:17px;font-weight:700;letter-spacing:0.2px;line-height:1.3;',
+  // H3: borde izquierdo rojo con fondo tenue — jerárquicamente subordinado, legible
+  h3:   'display:inline-block;background-color:#fff0f0;color:#6b1215;border-left:4px solid #C0272D;padding:8px 18px;border-radius:0 5px 5px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.4;',
+  // H4: solo texto con línea inferior, sin fondo — nivel informativo
+  h4:   'display:inline-block;color:#C0272D;border-bottom:2px solid #e8b4b5;padding:4px 2px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.1px;',
+  h5:   'display:inline-block;color:#7a1518;font-family:Arial,sans-serif;font-size:13px;font-weight:700;',
+  h6:   'display:inline-block;color:#999;font-family:Arial,sans-serif;font-size:12px;font-weight:700;font-style:italic;',
+  // ── TEXTO ────────────────────────────────────────────────────
+  // 15px más cómodo que 14px para lectura prolongada en pantalla
+  p:    'font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;',
+  ul:   'font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;padding-left:28px;',
+  ol:   'font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;padding-left:28px;',
+  li:   'margin:5px 0;font-weight:normal;',
+  // ── TABLA ────────────────────────────────────────────────────
+  table:'width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px;',
+  th:   'background-color:#C0272D;color:#ffffff;padding:10px 14px;text-align:left;font-weight:700;border:1px solid #9b1f23;font-size:14px;',
+  td:   'padding:9px 14px;border:1px solid #e0e0e0;color:#2d2d2d;vertical-align:middle;font-size:14px;line-height:1.6;',
+  tdalt:'padding:9px 14px;border:1px solid #e0e0e0;color:#2d2d2d;vertical-align:middle;background-color:#fdf5f5;font-size:14px;line-height:1.6;',
+  // ── BLOQUES EDUCATIVOS ────────────────────────────────────────
+  // Objetivo: verde oscuro — acción, logro, orientación al resultado
+  goal: 'display:inline-block;background-color:#f0faf1;border-left:5px solid #2e7d32;color:#1a4d1e;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;',
+  // Reflexión: violeta suave — introspección, pensamiento crítico
+  think:'display:inline-block;background-color:#faf5ff;border-left:5px solid #7b1fa2;color:#4a1570;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-style:italic;line-height:1.6;',
+  // Aviso: naranja con borde superior destacado — alerta sin ser agresivo
+  note: 'display:inline-block;background-color:#fffbeb;border-top:4px solid #f59e0b;border-left:4px solid #f59e0b;color:#78350f;padding:12px 20px;border-radius:0 6px 6px 6px;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;',
+  // Info: azul corporativo neutro — información complementaria
+  info: 'display:inline-block;background-color:#eff6ff;border-left:5px solid #1d4ed8;color:#1e3a8a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:600;line-height:1.6;',
+  // Consejo: verde azulado — práctica, aplicación directa
+  tip:  'display:inline-block;background-color:#f0fdfa;border-left:5px solid #0d9488;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:600;line-height:1.6;',
+  // Paso: azul índigo — proceso, secuencia, procedimiento (muy útil para bomberos)
+  step: 'display:inline-block;background-color:#eef2ff;border-left:5px solid #4338ca;color:#1e1b4b;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;',
+  // Cita: gris azulado neutro — referencia, fuente, testimonio
+  quote:'display:inline-block;background-color:#f8fafc;border-left:5px solid #94a3b8;color:#334155;padding:12px 22px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-style:italic;line-height:1.7;',
+  // Para saber más: gris cálido — ampliación opcional, sin urgencia
+  extra:'display:inline-block;background-color:#f9fafb;border:1px solid #d1d5db;border-left:4px solid #6b7280;color:#374151;padding:10px 18px;border-radius:0 6px 6px 6px;font-family:Arial,sans-serif;font-size:14px;font-weight:600;line-height:1.6;',
+  // Práctica: verde azulado — ejercicio, actividad práctica
+  practice:'display:inline-block;background-color:#f0fdfa;border:2px solid #0f766e;border-left:6px solid #0f766e;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;',
+  // ── MISCELÁNEOS ──────────────────────────────────────────────
+  body:   'display:inline-block;padding:6px 10px;color:#2d2d2d;font-family:Arial,sans-serif;font-size:15px;line-height:1.8;',
+  list:   'font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;',
+  divider:'display:block;border:none;border-top:2px solid #e5e7eb;margin:16px 0;',
+};
+
+// ══════════════════════════════════════════════════════════════
+//  DETECCIÓN DE ENCABEZADOS WORD
+// ══════════════════════════════════════════════════════════════
+function detectHeading(el) {
+  if (!el || el.nodeType !== 1) return 0;
+  const tag = el.tagName.toLowerCase();
+  const m = tag.match(/^h([1-6])$/);
+  if (m) return +m[1];
+  const cls = (el.className || '').toString();
+  for (let n = 1; n <= 6; n++) {
+    if (cls.includes('MsoHeading' + n) || cls.includes('Heading' + n) ||
+        cls.includes('heading' + n) || cls.includes('Titulo' + n) || cls.includes('Ttulo' + n)) return n;
+  }
+  const ol = (el.getAttribute('style') || '').match(/mso-outline-level\s*:\s*(\d)/i);
+  if (ol) return Math.min(+ol[1], 6);
+  return 0;
+}
+
+function isWordList(el) {
+  if (!el || el.nodeType !== 1 || el.tagName.toLowerCase() !== 'p') return false;
+  const cls = (el.className || '').toString();
+  return cls.includes('MsoListParagraph') || cls.includes('ListParagraph') || cls.includes('MsoList');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  UTILIDADES
+// ══════════════════════════════════════════════════════════════
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function getInline(node) {
+  let out = '';
+  for (const child of node.childNodes) {
+    if (child.nodeType === 3) {
+      // Solo normalizar saltos de línea Word → espacio. NO colapsar espacios múltiples.
+      const txt = child.textContent.replace(/[\r\n]+/g, ' ');
+      out += esc(txt);
+      continue;
+    }
+    if (child.nodeType !== 1) continue;
+    const tag = child.tagName.toLowerCase();
+    const st  = child.getAttribute('style') || '';
+    const inner = getInline(child);
+    if (tag === 'b' || tag === 'strong') { out += '<strong style="font-weight:bold;">' + inner + '</strong>'; }
+    else if (tag === 'i' || tag === 'em') { out += '<em style="font-style:italic;">' + inner + '</em>'; }
+    else if (tag === 'u') { out += '<span style="text-decoration:underline;">' + inner + '</span>'; }
+    else if (tag === 'a') {
+      const href = child.getAttribute('href') || '';
+      if (href && !href.startsWith('file:') && href !== '#')
+        out += '<a href="' + esc(href) + '" style="color:#C0272D;text-decoration:underline;" target="_blank">' + inner + '</a>';
+      else out += inner;
+    }
+    else if (tag === 'br') { out += ' '; }  // salto de línea suave Word → espacio
+    else if (tag === 'span' || tag === 'font') {
+      const bold = st.includes('font-weight') && (st.includes('bold') || /[67]\d\d|800/.test(st));
+      const italic = st.includes('font-style') && st.includes('italic');
+      const underline = st.includes('text-decoration') && st.includes('underline');
+      let w = inner;
+      if (bold) w = '<strong style="font-weight:bold;">' + w + '</strong>';
+      if (italic) w = '<em style="font-style:italic;">' + w + '</em>';
+      if (underline) w = '<span style="text-decoration:underline;">' + w + '</span>';
+      out += w;
+    } else { out += inner; }
+  }
+  return out;
+}
+
+// ── Extrae propiedades visuales seguras de una celda Word ──────
+// Preserva colores, alineación y negrita del original, descartando
+// propiedades MSO y otros atributos incompatibles con Moodle.
+function extractWordCellStyle(cell) {
+  const raw = cell.getAttribute('style') || '';
+  const props = {};
+
+  const get = (pattern) => {
+    const m = raw.match(pattern);
+    return m ? m[1].trim() : null;
+  };
+
+  // Background — ignorar 'auto', 'none', 'transparent', blanco puro (lo gestiona EX)
+  const bg = get(/background(?:-color)?\s*:\s*([^;]+)/i);
+  if (bg && !/auto|none|transparent|#fff(?:fff)?$|white|rgb\(255,\s*255,\s*255\)/i.test(bg)) {
+    props.backgroundColor = bg;
+  }
+
+  // Color de texto — ignorar 'auto', 'windowtext' (colores de sistema Word)
+  const col = get(/(?:^|;)\s*color\s*:\s*([^;]+)/i);
+  if (col && !/auto|windowtext/i.test(col)) {
+    props.color = col;
+  }
+
+  // Alineación de texto
+  const align = get(/text-align\s*:\s*([^;]+)/i);
+  if (align && !/auto/i.test(align)) props.textAlign = align;
+
+  // Peso de fuente
+  const fw = get(/font-weight\s*:\s*([^;]+)/i);
+  if (fw) props.fontWeight = fw;
+
+  // Construir fragmento de estilo inline
+  return Object.entries(props)
+    .map(([k, v]) => k.replace(/([A-Z])/g, '-$1').toLowerCase() + ':' + v)
+    .join(';');
+}
+
+function procTable(tableEl) {
+  // Detectar si la tabla tiene estilos de color propios en sus celdas
+  const hasWordColors = Array.from(tableEl.querySelectorAll('td,th')).some(c => {
+    const s = c.getAttribute('style') || '';
+    return /background(?:-color)?\s*:\s*(?!auto|none|transparent|#fff(?:fff)?|white)/i.test(s);
+  });
+
+  let out = '<table style="' + EX.table + '">';
+  Array.from(tableEl.querySelectorAll('tr')).forEach((row, ri) => {
+    out += '<tr>';
+    Array.from(row.querySelectorAll('td, th')).forEach(cell => {
+      const isH = cell.tagName.toLowerCase() === 'th' || ri === 0;
+      const content = getInline(cell);
+
+      const colspan = cell.getAttribute('colspan');
+      const rowspan = cell.getAttribute('rowspan');
+      const spanAttrs = (colspan && colspan !== '1' ? ' colspan="' + colspan + '"' : '')
+                      + (rowspan && rowspan !== '1' ? ' rowspan="' + rowspan + '"' : '');
+
+      let cellStyle;
+      if (hasWordColors) {
+        const baseStyle = isH
+          ? 'padding:10px 14px;text-align:left;font-weight:700;border:1px solid #ccc;font-family:Arial,sans-serif;font-size:14px;'
+          : 'padding:9px 14px;border:1px solid #e0e0e0;vertical-align:middle;font-family:Arial,sans-serif;font-size:14px;line-height:1.6;';
+        const wordStyle = extractWordCellStyle(cell);
+        cellStyle = baseStyle + (wordStyle ? wordStyle + ';' : '');
+      } else {
+        cellStyle = isH ? EX.th : (ri % 2 === 0 ? EX.td : EX.tdalt);
+      }
+
+      // Celdas combinadas: centrar vertical y horizontalmente
+      const hasSpan = (rowspan && rowspan !== '1') || (colspan && colspan !== '1');
+      if (hasSpan) {
+        cellStyle = cellStyle.replace(/vertical-align:[^;]+;?/g, '');
+        cellStyle += 'vertical-align:middle;text-align:center;';
+      }
+
+      const tag = isH ? 'th' : 'td';
+      out += '<' + tag + spanAttrs + ' style="' + cellStyle + '">' + content + '</' + tag + '>';
+    });
+    out += '</tr>';
+  });
+  return out + '</table>';
+}
+
+function stripBullet(h) { return h.replace(/^[\s\u00b7\u2022\u25cf\u25aa\u25ab\uf0b7\u2023\u2043\u204c\u204d\u2219\u25d8\u25d9\-–•·]\s*/,''); }
+function stripNumber(h) { return h.replace(/^\d+[\.\)]\s*/,''); }
+
+// ══════════════════════════════════════════════════════════════
+//  DETECCIÓN HEURÍSTICA DE ENCABEZADO EN PÁRRAFOS SIN ESTILO WORD
+//  Cubre los casos donde el usuario aplica negrita/mayúsculas
+//  manualmente en lugar de usar los estilos de Título de Word.
+// ══════════════════════════════════════════════════════════════
+function detectHeadingHeuristic(node) {
+  const text = node.textContent.trim();
+  if (!text || text.length > 120) return 0;  // demasiado largo para ser título
+
+  const style = node.getAttribute('style') || '';
+  const childNodes = Array.from(node.childNodes).filter(n =>
+    n.nodeType === 3 ? n.textContent.trim() : n.nodeType === 1
+  );
+
+  // ── Detectar por font-size en el estilo del párrafo ──
+  const fsMatch = style.match(/font-size\s*:\s*([\d.]+)(pt|px)/i);
+  if (fsMatch) {
+    const size = parseFloat(fsMatch[1]);
+    const unit = fsMatch[2].toLowerCase();
+    const px = unit === 'pt' ? size * 1.333 : size;
+    if (px >= 24) return 1;
+    if (px >= 18) return 2;
+    if (px >= 15) return 3;
+    if (px >= 13) return 4;
+  }
+
+  // ── Detectar por mso-style-name en el style ──
+  const msoName = style.match(/mso-style-name\s*:\s*["']?([^;"']+)/i);
+  if (msoName) {
+    const n = msoName[1].toLowerCase().trim();
+    if (n.includes('title') || n.includes('ttulo') || n.includes('titulo')) return 1;
+    if (n.includes('heading 1') || n.includes('encabezado 1')) return 1;
+    if (n.includes('heading 2') || n.includes('encabezado 2')) return 2;
+    if (n.includes('heading 3') || n.includes('encabezado 3')) return 3;
+    if (n.includes('heading 4') || n.includes('encabezado 4')) return 4;
+  }
+
+  // ── Detectar si el párrafo es completamente negrita (todo el contenido) ──
+  const isAllBold = (n) => {
+    if (n.nodeType === 3) return n.textContent.trim() === '';
+    const t = n.tagName.toLowerCase();
+    const s = n.getAttribute('style') || '';
+    if (t === 'b' || t === 'strong') return true;
+    if (s.match(/font-weight\s*:\s*(bold|[6-9]\d\d)/i)) return true;
+    return Array.from(n.childNodes).every(isAllBold);
+  };
+
+  const allBold = childNodes.length > 0 && childNodes.every(isAllBold);
+
+  // ── Detectar si el texto está en mayúsculas (≥ 80% letras en mayús) ──
+  const letters = text.replace(/[^a-záéíóúüñA-ZÁÉÍÓÚÜÑ]/g, '');
+  const upperRatio = letters.length > 0
+    ? (text.replace(/[^A-ZÁÉÍÓÚÜÑ]/g, '').length / letters.length)
+    : 0;
+  const isAllCaps = upperRatio >= 0.75;
+
+  // ── Detectar numeración tipo "1", "1.1", "1.1.1" al inicio ──
+  const numMatch = text.match(/^(\d+)(\.(\d+))?(\.(\d+))?[\s\.\-–]/);
+  let numDepth = 0;
+  if (numMatch) {
+    numDepth = numMatch[3] ? (numMatch[5] ? 3 : 2) : 1;
+  }
+
+  // Combinar señales para asignar nivel
+  if (allBold && isAllCaps && text.length <= 60) return 1;
+  if (allBold && isAllCaps) return 2;
+  if (allBold && numDepth === 1) return 2;
+  if (allBold && numDepth === 2) return 3;
+  if (allBold && numDepth === 3) return 4;
+  if (allBold && text.length <= 50) return 3;
+  if (isAllCaps && text.length <= 40) return 2;
+
+  return 0;
+}
+function convertWordBody(body) {
+  const st = {h1:0,h2:0,h3:0,h4:0,p:0,li:0,tb:0};
+  let out = '';
+
+  function walk(container) {
+    const kids = Array.from(container.childNodes);
+    let i = 0;
+    while (i < kids.length) {
+      const node = kids[i];
+      if (node.nodeType === 3) { const t = node.textContent.trim(); if (t) { out += '<p style="'+EX.p+'">'+esc(t)+'</p>\n'; st.p++; } i++; continue; }
+      if (node.nodeType !== 1) { i++; continue; }
+      const tag = node.tagName.toLowerCase();
+      const lvl = detectHeading(node);
+      if (lvl > 0) {
+        const content = getInline(node).replace(/[\r\n]+/g, ' ').replace(/^[\s\r\n]+|[\s\r\n]+$/g, '');
+        if (content) {
+          out += '<div style="margin:12px 0 8px 0;"><div style="' + EX['h'+lvl] + '">' + content + '</div></div>\n';
+          if (lvl===1) st.h1++; else if (lvl===2) st.h2++; else if (lvl===3) st.h3++; else st.h4++;
+        }
+        i++; continue;
+      }
+      if (isWordList(node)) {
+        const items = []; let ordered = false;
+        while (i < kids.length && isWordList(kids[i])) {
+          if (/^\d+[\.\)]\s/.test(kids[i].textContent.trim())) ordered = true;
+          items.push(kids[i]); i++;
+        }
+        const lt = ordered ? 'ol' : 'ul';
+        out += '<' + lt + ' style="' + EX[lt] + '">\n';
+        items.forEach(item => {
+          let c = getInline(item); c = stripBullet(c); if (ordered) c = stripNumber(c);
+          if (c.trim()) out += '  <li style="' + EX.li + '">' + c + '</li>\n';
+        });
+        out += '</' + lt + '>\n'; st.li++; continue;
+      }
+      if (tag === 'ul' || tag === 'ol') {
+        // Agrupar listas nativas consecutivas del mismo tipo en un único <ol>/<ul>
+        // Esto corrige el caso de Word Online que exporta cada ítem como su propio <ol>
+        const lt = tag;
+        out += '<' + lt + ' style="' + EX[lt] + '">\n';
+        while (i < kids.length && kids[i].nodeType === 1 && kids[i].tagName.toLowerCase() === lt) {
+          kids[i].querySelectorAll('li').forEach(li => {
+            const c = getInline(li).replace(/[\r\n]+/g, ' ').trim();
+            if (c) out += '  <li style="' + EX.li + '">' + c + '</li>\n';
+          });
+          i++;
+        }
+        out += '</' + lt + '>\n'; st.li++;
+        continue;
+      }
+      if (tag === 'table') { out += '<div style="overflow-x:auto;margin:12px 0;">' + procTable(node) + '</div>\n'; st.tb++; i++; continue; }
+      if (tag === 'img') {
+        const src = node.getAttribute('src') || '';
+        const alt = node.getAttribute('alt') || '';
+        // Las imágenes base64 ya fueron comprimidas y sustituidas en el DOM
+        // por handleDocxFile antes de llamar a convertWordBody.
+        // Aquí simplemente generamos el HTML del contenedor.
+        if (src) out += buildImageHTML(src, alt, '100%') + '\n';
+        i++; continue;
+      }
+      if (tag === 'figure') {
+        const img = node.querySelector('img');
+        if (img) {
+          const src = img.getAttribute('src') || '';
+          const caption = node.querySelector('figcaption');
+          const capText = caption ? caption.textContent.trim() : '';
+          if (src) out += buildImageHTML(src, capText, '100%') + '\n';
+        }
+        i++; continue;
+      }
+      if (tag === 'p') {
+        // Caso especial: párrafo que solo contiene una imagen (mammoth wraps imgs in <p>)
+        const onlyImg = node.querySelector('img');
+        const textContent = node.textContent.trim();
+        if (onlyImg && !textContent) {
+          const src = onlyImg.getAttribute('src') || '';
+          const alt = onlyImg.getAttribute('alt') || '';
+          if (src) out += buildImageHTML(src, alt, '100%') + '\n';
+          i++; continue;
+        }
+
+        // Colapsar solo saltos de línea Word, NO espacios múltiples escritos por el usuario
+        const content = getInline(node).replace(/[\r\n]+/g, ' ').replace(/^[\s\r\n]+|[\s\r\n]+$/g, '');
+
+        // Párrafo vacío → línea en blanco intencionada, pero máximo 1 consecutiva
+        if (!content) {
+          // Mirar si el anterior output ya terminó en línea en blanco para no duplicar
+          if (!out.endsWith('>&nbsp;</p>\n')) {
+            out += '<p style="' + EX.p + '">&nbsp;</p>\n';
+          }
+          i++; continue;
+        }
+
+        // Detección heurística de encabezado (párrafos formateados manualmente en Word)
+        const hLvl = detectHeadingHeuristic(node);
+        if (hLvl > 0) {
+          out += '<div style="margin:12px 0 8px 0;"><div style="' + EX['h'+hLvl] + '">' + content + '</div></div>\n';
+          if (hLvl===1) st.h1++; else if (hLvl===2) st.h2++; else if (hLvl===3) st.h3++; else st.h4++;
+        } else {
+          out += '<p style="' + EX.p + '">' + content + '</p>\n';
+          st.p++;
+        }
+        i++; continue;
+      }
+      if (['div','section','article','main','header','footer','aside','nav','figure','blockquote'].includes(tag)) { walk(node); i++; continue; }
+      i++;
+    }
+  }
+  walk(body);
+
+  // ── POST-PROCESO: fusionar listas consecutivas del mismo tipo ──
+  // Word Online exporta cada ítem como un <ol> o <ul> separado.
+  // Aunque haya nodos vacíos entre ellos en el DOM, aquí los fusionamos
+  // en el HTML final eliminando el cierre + apertura entre listas iguales.
+  function mergeLists(html) {
+    // Eliminar </ol>\n<ol ...> y </ul>\n<ul ...> entre listas iguales,
+    // conservando el estilo de la primera lista del grupo.
+    html = html.replace(/<\/ol>\s*\n<ol[^>]*>/gi, '');
+    html = html.replace(/<\/ul>\s*\n<ul[^>]*>/gi, '');
+    return html;
+  }
+
+  return { html: mergeLists(out.trim()), stats: st };
+}
+
+// ══════════════════════════════════════════════════════════════
+//  EDITOR UNIFICADO — estado y utilidades
+// ══════════════════════════════════════════════════════════════
+const editor = document.getElementById('editor');
+let savedRange = null;   // posición del cursor antes de clicar un botón de elemento
+let refreshTimer = null;
+
+// Guardar cursor justo ANTES de que el foco se mueva al botón
+document.querySelector('.toolbar').addEventListener('mousedown', function(e) {
+  if (!e.target.closest('.btn-el')) return;
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0) {
+    const r = sel.getRangeAt(0);
+    if (editor.contains(r.commonAncestorContainer)) {
+      savedRange = r.cloneRange();
+    }
+  }
+});
+
+// Insertar HTML en la posición guardada (o al final si no hay cursor)
+function insertHTMLAtCursor(html) {
+  editor.focus();
+  const sel = window.getSelection();
+  let range;
+
+  if (savedRange) {
+    sel.removeAllRanges();
+    sel.addRange(savedRange);
+    range = savedRange.cloneRange();
+    savedRange = null;
+  } else if (sel && sel.rangeCount > 0) {
+    range = sel.getRangeAt(0);
+  } else {
+    range = document.createRange();
+    range.selectNodeContents(editor);
+    range.collapse(false);
+  }
+
+  range.deleteContents();
+
+  const frag = document.createDocumentFragment();
+  const tmp  = document.createElement('div');
+  tmp.innerHTML = html;
+  let lastNode = null;
+  while (tmp.firstChild) { lastNode = tmp.firstChild; frag.appendChild(lastNode); }
+
+  // Añadir párrafo vacío después del bloque para poder seguir escribiendo
+  const after = document.createElement('p');
+  after.innerHTML = '<br>';
+  frag.appendChild(after);
+  lastNode = after;
+
+  range.insertNode(frag);
+
+  // Mover cursor al párrafo vacío tras el bloque insertado
+  const newRange = document.createRange();
+  newRange.setStart(lastNode, 0);
+  newRange.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(newRange);
+
+  editor.dispatchEvent(new Event('input'));
+}
+
+// Insertar HTML al FINAL del editor (para paste/upload masivo)
+function appendHTMLToEditor(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  while (tmp.firstChild) editor.appendChild(tmp.firstChild);
+  const sep = document.createElement('p'); sep.innerHTML = '<br>';
+  editor.appendChild(sep);
+  editor.dispatchEvent(new Event('input'));
+}
+
+// ── Actualizar preview y código con debounce ──
+editor.addEventListener('input', function() {
+  clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(refreshOutput, 300);
+  // dot-input ya no existe en el HTML — ignorar silenciosamente
+});
+
+// ── Tecla Enter: salir o partir bloques formateados (no en tablas) ──
+editor.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter') return;
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+  const range = sel.getRangeAt(0);
+  const node  = range.startContainer;
+  const el    = node.nodeType === 3 ? node.parentElement : node;
+
+  // Si el cursor está dentro de una celda de tabla → comportamiento nativo
+  if (el.closest('td, th')) return;
+
+  // ¿Estamos dentro de un div con display:inline-block? (= un bloque formateado)
+  const styled = el.closest('div[style*="inline-block"]');
+  if (!styled) return;
+  e.preventDefault();
+
+  const container = styled.closest('div[style*="margin"]') || styled;
+
+  // Detectar posición del cursor: inicio, final, o en medio
+  const beforeRange = document.createRange();
+  beforeRange.selectNodeContents(styled);
+  beforeRange.setEnd(range.startContainer, range.startOffset);
+  const textBefore = beforeRange.toString();
+
+  const afterRange = document.createRange();
+  afterRange.selectNodeContents(styled);
+  afterRange.setStart(range.startContainer, range.startOffset);
+  const textAfter = afterRange.toString();
+
+  const isCursorAtStart = textBefore.trim() === '';
+  const isCursorAtEnd   = textAfter.trim() === '';
+
+  const newP = document.createElement('p');
+  newP.innerHTML = '<br>';
+
+  if (isCursorAtStart) {
+    // Inicio → insertar párrafo vacío ANTES del bloque
+    container.parentNode.insertBefore(newP, container);
+    // El cursor se queda en el bloque (no se mueve)
+
+  } else if (isCursorAtEnd) {
+    // Final → insertar párrafo vacío DESPUÉS del bloque
+    container.after ? container.after(newP) : container.parentNode.insertBefore(newP, container.nextSibling);
+    const nr = document.createRange();
+    nr.setStart(newP, 0); nr.collapse(true);
+    sel.removeAllRanges(); sel.addRange(nr);
+
+  } else {
+    // En medio → partir el bloque: extraer contenido desde cursor hasta el final,
+    // crear un nuevo bloque del mismo estilo con ese contenido
+    const afterFrag = range.cloneRange();
+    afterFrag.selectNodeContents(styled);
+    afterFrag.setStart(range.startContainer, range.startOffset);
+    const extractedFrag = afterFrag.extractContents();
+
+    // Limpiar el contenido extraído a texto plano
+    const extractedText = extractedFrag.textContent;
+
+    // Crear nuevo bloque con el mismo style que el original
+    const newBlock = styled.cloneNode(false); // clonar sin hijos
+    newBlock.textContent = extractedText;
+
+    // Envolver en el mismo contenedor externo (div con margin)
+    const newContainer = container.cloneNode(false);
+    newContainer.appendChild(newBlock);
+
+    // Insertar después del bloque actual
+    container.after ? container.after(newContainer) : container.parentNode.insertBefore(newContainer, container.nextSibling);
+
+    // Insertar párrafo vacío entre los dos bloques
+    container.after ? container.after(newP) : container.parentNode.insertBefore(newP, newContainer);
+
+    // Mover cursor al inicio del nuevo bloque
+    const nr = document.createRange();
+    nr.setStart(newBlock, 0); nr.collapse(true);
+    sel.removeAllRanges(); sel.addRange(nr);
+  }
+});
+
+// ── PEGADO: distinguir Word vs. texto interno del editor ──
+editor.addEventListener('paste', function(e) {
+  const html = e.clipboardData.getData('text/html');
+  const text = e.clipboardData.getData('text/plain');
+
+  // Detectar si viene de Word por sus marcas características
+  const isFromWord = html && (
+    html.includes('urn:schemas-microsoft-com') ||
+    html.includes('mso-') ||
+    html.includes('MsoNormal') ||
+    html.includes('w:WordDocument') ||
+    html.includes('Microsoft Word')
+  );
+
+  if (isFromWord) {
+    e.preventDefault();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const result = convertWordBody(doc.body);
+    if (result.html) {
+      insertHTMLAtCursor(result.html);
+      updateStats(result.stats);
+      setTimeout(() => {
+        editor.querySelectorAll('td, th').forEach(cell => {
+          if (!cell.getAttribute('contenteditable')) {
+            cell.setAttribute('contenteditable', 'true');
+            cell.style.outline = 'none';
+            cell.style.cursor = 'text';
+          }
+        });
+      }, 0);
+    }
+    return;
+  }
+
+  // Texto plano — pegarlo limpiamente sin formato en la posición del cursor
+  if (text && text.trim()) {
+    e.preventDefault();
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+    range.deleteContents();
+    // Insertar como nodo de texto puro (sin HTML) para no romper el bloque padre
+    const textNode = document.createTextNode(text);
+    range.insertNode(textNode);
+    range.setStartAfter(textNode);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(refreshOutput, 300);
+    return;
+  }
+
+  // HTML genérico (no Word) — pegar nativamente
+});
+
+// ── Drag & drop de archivo .docx o imagen ──
+editor.addEventListener('dragover',  e => { e.preventDefault(); editor.classList.add('dragover'); });
+editor.addEventListener('dragleave', ()  => editor.classList.remove('dragover'));
+editor.addEventListener('drop', function(e) {
+  e.preventDefault();
+  editor.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  if (file.name.toLowerCase().endsWith('.docx')) {
+    handleDocxFile(file);
+  } else if (file.type.startsWith('image/')) {
+    // Imagen arrastrada directamente — comprimir e insertar con el contenedor estético
+    compressAndInsertImage(file, '100%', '');
+  } else {
+    showToast('⚠️ Solo se admiten archivos .docx e imágenes');
+  }
+});
+
+// ══════════════════════════════════════════════════════════════
+//  BLOQUES DE ELEMENTOS — inserción directa en el cursor
+// ══════════════════════════════════════════════════════════════
+const BLOCK_CFG = {
+  h1:     { defaultText:'Título del módulo' },
+  h2:     { defaultText:'Subtítulo de sección' },
+  h3:     { defaultText:'Apartado' },
+  h4:     { defaultText:'Subapartado' },
+  body:   { defaultText:'Escribe aquí el texto del párrafo.' },
+  goal:   { defaultText:'🎯 Al finalizar esta unidad, el bombero será capaz de identificar y aplicar correctamente el protocolo de actuación en...' },
+  think:  { defaultText:'🤔 Antes de continuar, reflexiona: ¿cómo actuarías ante un incendio con baja visibilidad y salidas bloqueadas?' },
+  note:   { defaultText:'⚠️ IMPORTANTE: Este procedimiento solo debe ejecutarse con el equipo de protección individual (EPI) completo y homologado.' },
+  info:   { defaultText:'ℹ️ Información adicional: según el protocolo del CEIS, en situaciones de riesgo eléctrico se debe mantener una distancia mínima de seguridad de...' },
+  tip:    { defaultText:'💡 Consejo práctico: durante los ejercicios de ventilación táctica, comprueba siempre la dirección del viento antes de abrir nuevas vías de entrada de aire.' },
+  step:   { defaultText:'🔢 Paso 1: Evalúa el perímetro exterior del inmueble antes de acceder al interior.' },
+  quote:    { defaultText:'«La seguridad no es un procedimiento, es una actitud.»' },
+  extra:    { defaultText:'📚 Para ampliar conocimientos sobre este tema, consulta el Manual de Intervención en Incendios Estructurales del CEIS Madrid.' },
+  practice: { defaultText:'🛠️ Práctica: Realiza el siguiente ejercicio siguiendo los pasos indicados por el instructor.' },
+  divider:{ isSep:true },
+  list:   { isList:true },
+};
+
+function addBlock(type) {
+  const cfg = BLOCK_CFG[type]; if (!cfg) return;
+  let html = '';
+  if (cfg.isSep) {
+    html = '<hr style="' + EX.divider + '">';
+  } else if (cfg.isList) {
+    html = '<ul style="' + EX.ul + '"><li style="' + EX.li + '">Elemento 1</li><li style="' + EX.li + '">Elemento 2</li><li style="' + EX.li + '">Elemento 3</li></ul>';
+  } else {
+    html = '<div style="margin:12px 0;"><div style="' + EX[type] + '" contenteditable="true">' + esc(cfg.defaultText) + '</div></div>';
+  }
+  insertHTMLAtCursor(html);
+}
+
+// ── TABLA ──
+// ══════════════════════════════════════════════════════════════
+//  MODAL MULTIMEDIA — imagen / vídeo / PDF
+// ══════════════════════════════════════════════════════════════
+let currentMediaType = null;
+
+const MEDIA_CFG = {
+  imgurl: {
+    title:'🔗 Insertar imagen desde URL',
+    label:'URL de la imagen',
+    hint: 'Introduce la URL de la imagen. Puede ser una imagen de internet, de tu servidor o de Moodle. La imagen se mostrará directamente en Moodle siempre que el alumno tenga acceso a esa URL.',
+    placeholder:'https://ejemplo.com/imagen.jpg',
+    extra:`<div style="margin-top:4px;">
+      <label class="modal-label">Título / pie de foto</label>
+      <input id="mediaCaption-imgurl" class="modal-input" type="text"
+        style="font-size:13px;text-align:left;font-weight:400;letter-spacing:0;"
+        placeholder="Ej: Figura 1 — Fases de un incendio">
+    </div>
+    <div style="margin-top:4px;">
+      <label class="modal-label">Ancho máximo</label>
+      <select id="mediaWidth-imgurl" class="modal-input" style="font-size:13px;text-align:left;font-weight:400;">
+        <option value="100%">100% — ocupa todo el ancho</option>
+        <option value="75%">75%</option>
+        <option value="50%">50%</option>
+        <option value="auto">Auto — tamaño original</option>
+      </select>
+    </div>`
+  },
+  img: {
+    title:'🖼️ Insertar imagen',
+    isFile: true,
+    hint: 'Selecciona una imagen de tu ordenador. Se comprimirá automáticamente y quedará incrustada en el contenido — no necesitas subirla a ningún servidor.',
+    extra:`
+    <div style="margin-top:4px;">
+      <label class="modal-label">Título / pie de foto</label>
+      <input id="mediaCaption-img" class="modal-input" type="text"
+        style="font-size:13px;text-align:left;font-weight:400;letter-spacing:0;"
+        placeholder="Ej: Figura 1 — Fases de un incendio">
+    </div>
+    <div style="margin-top:4px;">
+      <label class="modal-label">Ancho máximo</label>
+      <select id="mediaWidth" class="modal-input" style="font-size:13px;text-align:left;font-weight:400;">
+        <option value="100%">100% — ocupa todo el ancho</option>
+        <option value="75%">75%</option>
+        <option value="50%">50%</option>
+        <option value="auto">Auto — tamaño original</option>
+      </select>
+    </div>`
+  },
+  video: {
+    title:'🎬 Insertar vídeo',
+    label:'URL del vídeo',
+    hint: 'Pega la URL del vídeo. YouTube y YouTube Shorts se convierten automáticamente. Para la Mediateca EducaMadrid: abre el vídeo → Compartir/Insertar → copia la URL del iframe. Para cualquier otra plataforma: usa la URL directa del iframe embed.',
+    placeholder:'https://mediateca.educa.madrid.org/video/... · https://youtube.com/watch?v=... · o cualquier URL embed',
+    extra:`<div style="margin-top:4px;">
+      <label class="modal-label">Título del vídeo</label>
+      <input id="mediaCaption" class="modal-input" type="text"
+        style="font-size:13px;text-align:left;font-weight:400;letter-spacing:0;"
+        placeholder="Título que aparecerá debajo del vídeo">
+    </div>`
+  },
+  pdf: {
+    title:'📄 Insertar PDF',
+    label:'URL del PDF',
+    hint: 'Sube el PDF en el gestor de archivos de tu Página en Moodle y copia la URL (pluginfile.php/...).',
+    placeholder:'https://tu-moodle.es/pluginfile.php/.../documento.pdf',
+    extra:`<div style="margin-top:4px;">
+      <label class="modal-label">Título del documento</label>
+      <input id="mediaCaption" class="modal-input" type="text"
+        style="font-size:13px;text-align:left;font-weight:400;letter-spacing:0;"
+        placeholder="Título que aparecerá debajo del PDF">
+    </div>
+    <div style="margin-top:4px;">
+      <label class="modal-label">Altura del visor</label>
+      <select id="mediaHeight" class="modal-input" style="font-size:13px;text-align:left;font-weight:400;">
+        <option value="60vh">60% de la pantalla</option>
+        <option value="75vh" selected>75% de la pantalla</option>
+        <option value="90vh">90% de la pantalla</option>
+        <option value="100vh">100% — pantalla completa</option>
+      </select>
+    </div>
+    <div style="margin-top:10px;background:#f8f9fa;border:1.5px solid #e4e7ec;border-radius:8px;padding:12px 14px;">
+      <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+        <input type="checkbox" id="pdfProtect"
+          style="width:16px;height:16px;margin-top:2px;accent-color:#C0272D;flex-shrink:0;">
+        <span style="font-size:12px;color:#374151;line-height:1.5;">
+          <strong>Proteger contra descarga e impresión</strong><br>
+          <span style="color:#6b7280;">Oculta la barra de herramientas y el panel lateral del visor. Los alumnos podrán leer y navegar el documento, pero no verán los botones de descarga ni impresión. Funciona en Chrome y Edge.</span>
+        </span>
+      </label>
+    </div>`
+  }
+};
+
+function openMediaModal(type) {
+  currentMediaType = type;
+  const cfg = MEDIA_CFG[type];
+  if (!cfg) return;
+
+  // Resetear SIEMPRE todos los campos — evita que queden valores del modal anterior
+  document.getElementById('mediaModal-title').textContent = cfg.title;
+  document.getElementById('mediaModal-label').textContent = cfg.label || '';
+  document.getElementById('mediaModal-hint').textContent  = cfg.hint  || '';
+  document.getElementById('mediaUrl').placeholder = cfg.placeholder || '';
+  document.getElementById('mediaUrl').value = '';
+  document.getElementById('mediaExtra').innerHTML = cfg.extra || '';
+
+  const fileRow = document.getElementById('mediaFileRow');
+  const urlRow  = document.getElementById('mediaUrlRow');
+
+  if (cfg.isFile) {
+    fileRow.style.display = '';
+    urlRow.style.display  = 'none';
+    const fi = document.getElementById('mediaFileInput');
+    if (fi) fi.value = '';
+    document.getElementById('imgPreviewWrap').style.display = 'none';
+  } else {
+    fileRow.style.display = 'none';
+    urlRow.style.display  = '';
+    setTimeout(() => document.getElementById('mediaUrl').focus(), 60);
+  }
+
+  document.getElementById('mediaModal').classList.add('open');
+}
+
+function closeMediaModal() {
+  document.getElementById('mediaModal').classList.remove('open');
+  currentMediaType = null;
+}
+
+
+// ── Compresión Base64 de imagen ──
+// ══════════════════════════════════════════════════════════════
+//  COMPRESIÓN DE IMÁGENES BASE64 (Promise-based)
+// ══════════════════════════════════════════════════════════════
+function compressBase64Image(dataUrl, maxW, quality, cb) {
+  const img = new Image();
+  img.onload = function() {
+    const canvas = document.createElement('canvas');
+    let w = img.width, h = img.height;
+    if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+    cb(canvas.toDataURL('image/jpeg', quality));
+  };
+  img.onerror = function() { cb(dataUrl); };
+  img.src = dataUrl;
+}
+
+// Devuelve una Promise que comprime todas las imágenes base64 en un doc DOM
+function compressAllImages(doc) {
+  return new Promise(function(resolve) {
+    const imgs = Array.from(doc.querySelectorAll('img'));
+    const base64Imgs = imgs.filter(function(img) {
+      return (img.getAttribute('src') || '').startsWith('data:image');
+    });
+    if (base64Imgs.length === 0) { resolve(); return; }
+    let done = 0;
+    base64Imgs.forEach(function(img) {
+      compressBase64Image(img.src, 1200, 0.82, function(compressed) {
+        img.src = compressed;
+        done++;
+        if (done === base64Imgs.length) resolve();
+      });
+    });
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CARGA DE ARCHIVO .DOCX
+// ══════════════════════════════════════════════════════════════
+function handleDocxFile(file) {
+  if (!file) return;
+  if (!file.name.toLowerCase().endsWith('.docx')) {
+    showToast('⚠️ Solo se admiten archivos .docx de Word'); return;
+  }
+  showToast('⏳ Procesando ' + file.name + '...');
+
+  const reader = new FileReader();
+  reader.onerror = function() { showToast('❌ No se pudo leer el archivo'); };
+
+  reader.onload = function(e) {
+    const arrayBuffer = e.target.result;
+
+    mammoth.convertToHtml({ arrayBuffer }, {
+      // Extraer imágenes como base64 inline
+      convertImage: mammoth.images.imgElement(function(image) {
+        return image.read('base64').then(function(b64) {
+          return { src: 'data:' + image.contentType + ';base64,' + b64 };
+        });
+      }),
+      styleMap: [
+        "p[style-name='Heading 1'] => h1", "p[style-name='Heading 2'] => h2",
+        "p[style-name='Heading 3'] => h3", "p[style-name='Heading 4'] => h4",
+        "p[style-name='Título 1']  => h1", "p[style-name='Título 2']  => h2",
+        "p[style-name='Título 3']  => h3", "p[style-name='Título 4']  => h4",
+        "p[style-name='Title']     => h1", "b => strong", "i => em", "u => u",
+      ]
+    })
+    .then(function(result) {
+      const html = result.value;
+      if (!html || !html.trim()) { showToast('⚠️ El documento parece estar vacío'); return; }
+
+      // Parsear el HTML de mammoth en un DOM
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      // Contar imágenes para el toast
+      const imgCount = doc.querySelectorAll('img').length;
+
+      // PASO 1: Comprimir todas las imágenes (Promise)
+      return compressAllImages(doc).then(function() {
+        // PASO 2: Ahora que las imágenes están comprimidas en el DOM, convertir
+        const conv = convertWordBody(doc.body);
+        appendHTMLToEditor(conv.html);
+        updateStats(conv.stats);
+        const imgMsg = imgCount > 0 ? ' · ' + imgCount + ' imagen(es)' : '';
+        showToast('✅ ' + file.name + ' cargado' + imgMsg);
+      });
+    })
+    .catch(function(err) {
+      showToast('❌ Error al procesar el archivo: ' + (err.message || err));
+    });
+  };
+
+  reader.readAsArrayBuffer(file);
+}
+
+function compressAndInsertImage(file, width, caption) {
+  const MAX_W = 1200, QUALITY = 0.82;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      let w = img.width, h = img.height;
+      if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', QUALITY);
+      const kb = Math.round(dataUrl.length * 0.75 / 1024);
+      if (kb > 800) showToast('⚠️ Imagen grande (' + kb + ' KB) — considera reducirla', 4000);
+      const html = buildImageHTML(dataUrl, caption, width);
+      closeMediaModal();
+      insertHTMLAtCursor(html);
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function buildImageHTML(src, caption, width) {
+  return '<div style="text-align:center;margin:20px 0;">' +
+         '<div style="display:inline-block;width:' + (width||'100%') + ';background:#fff;' +
+         'border:1px solid #d1d1d1;border-radius:10px;overflow:hidden;' +
+         'box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Arial,sans-serif;">' +
+         '<div style="text-align:center;background:#f0f0f0;padding:16px;">' +
+         '<img src="' + src + '" alt="' + esc(caption || 'Imagen') + '" ' +
+         'style="width:100%;height:auto;border-radius:6px;display:block;">' +
+         '</div>' +
+         '<div style="padding:12px 16px;background:#f9f9f9;border-top:1px solid #d1d1d1;text-align:center;">' +
+         '<span contenteditable="true" style="font-weight:700;color:#333;font-size:1em;display:block;outline:none;cursor:text;" ' +
+         'title="Haz clic para editar el título">🖼️ ' + (caption ? esc(caption) : 'Haz clic para escribir el título') + '</span>' +
+         '</div>' +
+         '</div>' +
+         '</div>';
+}
+
+// Previsualizar imagen en modal al seleccionarla
+document.getElementById('mediaModal').addEventListener('change', function(e) {
+  if (e.target.id !== 'mediaFileInput') return;
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const prev = document.getElementById('imgPreview');
+    const wrap = document.getElementById('imgPreviewWrap');
+    const info = document.getElementById('imgFileInfo');
+    prev.src = ev.target.result;
+    info.textContent = file.name + ' · ' + Math.round(file.size/1024) + ' KB — se comprimirá automáticamente';
+    wrap.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+function confirmMedia() {
+  if (currentMediaType === 'img') {
+    const fileInput = document.getElementById('mediaFileInput');
+    const file    = fileInput && fileInput.files && fileInput.files[0];
+    const width   = (document.getElementById('mediaWidth')       || {value:'100%'}).value;
+    const caption = (document.getElementById('mediaCaption-img') || {value:''}).value.trim();
+    if (!file) { showToast('⚠️ Selecciona una imagen primero'); return; }
+    compressAndInsertImage(file, width, caption);
+    return;
+  }
+
+  if (currentMediaType === 'imgurl') {
+    const url     = (document.getElementById('mediaUrl')            || {value:''}).value.trim();
+    const caption = (document.getElementById('mediaCaption-imgurl') || {value:''}).value.trim();
+    const width   = (document.getElementById('mediaWidth-imgurl')   || {value:'100%'}).value;
+    if (!url) { showToast('⚠️ Introduce la URL de la imagen'); return; }
+    const html = buildImageHTML(url, caption, width);
+    closeMediaModal();
+    insertHTMLAtCursor(html);
+    return;
+  }
+
+  const url = (document.getElementById('mediaUrl') || {value:''}).value.trim();
+  if (!url) { showToast('⚠️ Introduce una URL'); return; }
+  let html = '';
+
+  if (currentMediaType === 'video') {
+    const caption = (document.getElementById('mediaCaption') || {value:''}).value.trim();
+    let embedUrl = url;
+    const ytMatch  = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    const ytShorts = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+    if (ytMatch)  embedUrl = 'https://www.youtube.com/embed/' + ytMatch[1];
+    if (ytShorts) embedUrl = 'https://www.youtube.com/embed/' + ytShorts[1];
+    html = '<div style="width:100%;margin:20px auto;background:#fff;border:1px solid #d1d1d1;' +
+           'border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Arial,sans-serif;">' +
+           '<div style="position:relative;width:100%;padding-bottom:56.25%;background:#000;">' +
+           '<iframe src="' + embedUrl + '" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>' +
+           '</div>' +
+           '<div style="padding:14px 18px;background:#f9f9f9;border-top:1px solid #d1d1d1;text-align:center;">' +
+           '<span contenteditable="true" style="font-weight:700;color:#333;font-size:1.05em;display:block;outline:none;cursor:text;" ' +
+           'title="Haz clic para editar el título">🎬 ' + (caption ? esc(caption) : 'Haz clic para escribir el título') + '</span>' +
+           '</div>' +
+           '</div>';
+  }
+
+  if (currentMediaType === 'pdf') {
+    const caption   = (document.getElementById('mediaCaption') || {value:''}).value.trim();
+    const height    = (document.getElementById('mediaHeight')  || {value:'75vh'}).value;
+    const protect   = document.getElementById('pdfProtect');
+    const doProtect = protect ? protect.checked : false;
+
+    const params = doProtect ? '#toolbar=0&navpanes=0&scrollbar=1' : '#scrollbar=1';
+
+    html = '<div style="width:100%;margin:20px auto;border-radius:10px;' +
+           'overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Arial,sans-serif;">' +
+           '<iframe src="' + url + params + '" ' +
+           'style="width:100%;height:' + height + ';border:0;display:block;min-height:300px;">' +
+           '</iframe>' +
+           (caption ? '<div style="padding:14px 18px;background:#f9f9f9;border-top:1px solid #d1d1d1;text-align:center;">' +
+             '<span style="font-weight:700;color:#333;font-size:1.05em;">📄 ' + esc(caption) + '</span></div>' : '') +
+           '</div>';
+  }
+
+  if (html) { closeMediaModal(); insertHTMLAtCursor(html); }
+}
+
+
+document.getElementById('mediaModal').addEventListener('click', e => {
+  if (e.target.id === 'mediaModal') closeMediaModal();
+});
+document.getElementById('mediaModal').addEventListener('keydown', e => {
+  if (e.key === 'Enter') confirmMedia();
+  if (e.key === 'Escape') closeMediaModal();
+});
+
+// ══════════════════════════════════════════════════════════════
+function openTableModal()  { document.getElementById('tableModal').classList.add('open'); setTimeout(()=>document.getElementById('tableCols').focus(),50); }
+function closeTableModal() { document.getElementById('tableModal').classList.remove('open'); }
+function confirmTable() {
+  const cols = Math.max(1, Math.min(10, parseInt(document.getElementById('tableCols').value)||3));
+  const rows = Math.max(1, Math.min(30, parseInt(document.getElementById('tableRows').value)||3));
+  const head = document.getElementById('tableHeader').checked;
+  closeTableModal();
+  let t = '<div style="overflow-x:auto;margin:12px 0;"><table style="' + EX.table + '">';
+  if (head) {
+    t += '<tr>';
+    for (let i=0;i<cols;i++) t += '<th style="' + EX.th + '">Columna '+(i+1)+'</th>';
+    t += '</tr>';
+  }
+  for (let r=0;r<rows;r++) {
+    t += '<tr>';
+    for (let c=0;c<cols;c++) t += '<td style="' + (r%2===0 ? EX.td : EX.tdalt) + '">Dato '+(r*cols+c+1)+'</td>';
+    t += '</tr>';
+  }
+  t += '</table></div>';
+  insertHTMLAtCursor(t);
+}
+document.getElementById('tableModal').addEventListener('click', e => {
+  if (e.target.id === 'tableModal') closeTableModal();
+});
+
+// ══════════════════════════════════════════════════════════════
+//  CONSTRUIR HTML FINAL — leer el editor directamente
+// ══════════════════════════════════════════════════════════════
+function buildFinalHTML() {
+  let html = editor.innerHTML || '';
+  // Limpiar artefactos de contenteditable
+  html = html.replace(/ contenteditable="[^"]*"/gi, '');
+  html = html.replace(/ bis_skin_checked="[^"]*"/gi, '');
+  html = html.replace(/ style="outline: none; cursor: text;"/gi, '');
+  html = html.replace(/<p><br><\/p>/gi, '<p>&nbsp;</p>');
+  // Eliminar <br> SOLO fuera de celdas de tabla
+  // Estrategia: proteger los <br> dentro de td/th, limpiar los demás, restaurar
+  const PLACEHOLDER = '\x00BR\x00';
+  // Marcar los <br> dentro de celdas para protegerlos
+  html = html.replace(/(<t[dh][^>]*>[\s\S]*?<\/t[dh]>)/gi, match =>
+    match.replace(/<br\s*\/?>/gi, PLACEHOLDER)
+  );
+  // Eliminar los <br> que quedaron fuera (no protegidos)
+  html = html.replace(/<br\s*\/?>/gi, '');
+  // Restaurar los <br> protegidos
+  html = html.replace(/\x00BR\x00/g, '<br>');
+  html = html.trim();
+  return html;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  REFRESCAR SALIDA
+// ══════════════════════════════════════════════════════════════
+function refreshOutput() {
+  const html    = buildFinalHTML();
+  const btnCopy = document.getElementById('btn-copy');
+  if (btnCopy) btnCopy.disabled = !html || html === '<p>&nbsp;</p>';
+}
+
+function manualRefresh() { refreshOutput(); }
+
+// ══════════════════════════════════════════════════════════════
+//  STATS BAR
+// ══════════════════════════════════════════════════════════════
+function updateStats(st) {
+  const set = (id, label, val) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = label + ': ' + (val > 0 ? val : '—');
+    el.classList.toggle('on', val > 0);
+  };
+  set('s-h1','H1',st.h1); set('s-h2','H2',st.h2); set('s-h3','H3',st.h3); set('s-h4','H4+',st.h4);
+  set('s-p','Párrs',st.p); set('s-li','Listas',st.li); set('s-tb','Tablas',st.tb);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  LIMPIAR
+// ══════════════════════════════════════════════════════════════
+function clearAll() {
+  editor.innerHTML = '';
+  updateStats({h1:0,h2:0,h3:0,h4:0,p:0,li:0,tb:0});
+  refreshOutput();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  COPIAR — con overlay de éxito
+// ══════════════════════════════════════════════════════════════
+async function copyHTML() {
+  const html = buildFinalHTML();
+  if (!html) return;
+  try {
+    await navigator.clipboard.writeText(html);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = html; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
+    document.body.appendChild(ta); ta.focus(); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  }
+  const overlay = document.getElementById('copy-success');
+  overlay.classList.add('show');
+  setTimeout(() => overlay.classList.remove('show'), 3500);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  SUBIDA DE ARCHIVO .DOCX
+// ══════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+//  TOAST — notificación flotante
+// ══════════════════════════════════════════════════════════════
+function showToast(msg, duration) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(() => t.classList.remove('show'), duration || 3000);
+}
+
+document.getElementById('file-input').addEventListener('change', function() {
+  const file = this.files && this.files[0];
+  if (file) {
+    handleDocxFile(file);
+    setTimeout(() => { this.value = ''; }, 500);
+  }
+});
+
+// ══════════════════════════════════════════════════════════════
+//  DESHACER / REHACER
+// ══════════════════════════════════════════════════════════════
+function doUndo() {
+  editor.focus();
+  document.execCommand('undo');
+  setTimeout(refreshOutput, 50);
+}
+function doRedo() {
+  editor.focus();
+  document.execCommand('redo');
+  setTimeout(refreshOutput, 50);
+}
+// Ctrl+Z y Ctrl+Y también disparan refresh
+editor.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'y')) {
+    setTimeout(refreshOutput, 100);
+  }
+});
+
+// ══════════════════════════════════════════════════════════════
+//  FORMATO DE TEXTO
+// ══════════════════════════════════════════════════════════════
+function applyFmt(cmd) {
+  editor.focus();
+  document.execCommand(cmd, false, null);
+  updateFormatButtons();
+  refreshOutput();
+}
+
+// Actualizar estado visual de los botones según la selección actual
+function updateFormatButtons() {
+  const cmds = ['bold','italic','underline','justifyLeft','justifyCenter','justifyRight'];
+  cmds.forEach(cmd => {
+    const btns = document.querySelectorAll('.fmt-btn[onclick*="' + cmd + '"]');
+    btns.forEach(btn => btn.classList.toggle('active', document.queryCommandState(cmd)));
+  });
+}
+
+// Actualizar botones al cambiar la selección
+editor.addEventListener('keyup',   updateFormatButtons);
+editor.addEventListener('mouseup', updateFormatButtons);
+editor.addEventListener('selectionchange', updateFormatButtons);
+
+// ══════════════════════════════════════════════════════════════
+//  MODAL AYUDA — sistema de tarjetas
+// ══════════════════════════════════════════════════════════════
+const HELP_CONTENT = {
+  s1: {
+    icon:'📝', title:'Crear contenido',
+    html:`
+      <p>Tienes tres formas de crear contenido en el editor:</p>
+      <ol>
+        <li><strong>Escribir directamente:</strong> haz clic en el área blanca del editor y escribe como en cualquier procesador de texto.</li>
+        <li><strong>Pegar desde Word:</strong> copia el texto en Word con <kbd>Ctrl+C</kbd>, haz clic en el editor y pega con <kbd>Ctrl+V</kbd>. El asistente detecta automáticamente los títulos, párrafos, listas, tablas y formatos.</li>
+        <li><strong>Abrir un archivo .docx:</strong> pulsa el botón rojo <strong>📂 Abrir Word (.docx)</strong> o arrastra el archivo directamente sobre el editor. El documento se convierte automáticamente.</li>
+      </ol>
+      <p>Si pegas desde <strong>Word Online</strong> (el navegador), el reconocimiento de títulos puede ser menos preciso. Para mejores resultados usa <strong>Word de escritorio</strong>.</p>
+      <div class="help-tip">💡 Para que los títulos se detecten correctamente, aplica en Word los estilos <strong>Título 1, Título 2, Título 3</strong> (no solo negrita manual). Atajo: <kbd>Ctrl+Alt+1</kbd>, <kbd>Ctrl+Alt+2</kbd>, <kbd>Ctrl+Alt+3</kbd>.</div>`
+  },
+  s2: {
+    icon:'🧩', title:'Bloques especiales',
+    html:`
+      <p>Los bloques especiales son elementos visuales que destacan contenido importante. Para insertarlos:</p>
+      <ol>
+        <li>Coloca el cursor en el editor en la posición donde quieres el bloque.</li>
+        <li>Pulsa el botón correspondiente en la barra de herramientas.</li>
+        <li>El bloque aparece en la posición del cursor con texto de ejemplo.</li>
+        <li>Haz clic sobre el texto del bloque para editarlo.</li>
+      </ol>
+      <p>Bloques disponibles:</p>
+      <ul>
+        <li><strong>🎯 Objetivo:</strong> qué aprenderá el alumno al finalizar la unidad.</li>
+        <li><strong>🤔 Reflexión:</strong> pregunta para que el alumno piense antes de continuar.</li>
+        <li><strong>⚠️ Aviso:</strong> información crítica de seguridad o advertencia importante.</li>
+        <li><strong>ℹ️ Info:</strong> información complementaria no crítica.</li>
+        <li><strong>💡 Consejo:</strong> buena práctica o recomendación del instructor.</li>
+        <li><strong>🔢 Paso:</strong> instrucción numerada dentro de un procedimiento.</li>
+        <li><strong>🛠️ Práctica:</strong> ejercicio o actividad práctica para el alumno.</li>
+        <li><strong>«» Cita:</strong> referencia, fuente o cita textual.</li>
+        <li><strong>📚 Extra:</strong> material de ampliación opcional.</li>
+      </ul>
+      <div class="help-tip">💡 Para mover un bloque, selecciónalo con el ratón, córtalo con <kbd>Ctrl+X</kbd> y pégalo en otra posición con <kbd>Ctrl+V</kbd>.</div>`
+  },
+  s3: {
+    icon:'🖼️', title:'Imágenes',
+    html:`
+      <p>Tienes cuatro formas de insertar imágenes:</p>
+      <p><strong>1. Desde tu equipo — botón 🖼️ Imagen (recomendado)</strong></p>
+      <ol>
+        <li>Coloca el cursor donde quieres la imagen.</li>
+        <li>Pulsa <strong>🖼️ Imagen</strong> en la barra de herramientas.</li>
+        <li>Pulsa <strong>📁 Elegir imagen...</strong> y selecciona el archivo.</li>
+        <li>Escribe un pie de foto y elige el ancho.</li>
+        <li>Pulsa <strong>Insertar</strong>. La imagen se comprime automáticamente y queda incrustada en el HTML sin necesitar ningún servidor.</li>
+      </ol>
+      <p><strong>2. Desde una URL — botón 🔗 Imagen URL</strong></p>
+      <ol>
+        <li>Coloca el cursor donde quieres la imagen.</li>
+        <li>Pulsa <strong>🔗 Imagen URL</strong> en la barra de herramientas.</li>
+        <li>Pega la URL completa de la imagen (puede ser de Moodle, de un servidor externo, etc.).</li>
+        <li>Escribe un pie de foto y elige el ancho.</li>
+        <li>Pulsa <strong>Insertar</strong>.</li>
+      </ol>
+      <p><strong>3. Arrastrando al editor</strong></p>
+      <p>Arrastra un archivo de imagen desde tu ordenador directamente sobre el área del editor. Se inserta en la posición del cursor.</p>
+      <p><strong>4. Desde un documento Word</strong></p>
+      <p>Si abres o pegas un documento Word que ya contiene imágenes, el asistente las detecta, comprime e inserta automáticamente.</p>
+      <div class="help-tip">💡 El pie de foto es editable directamente haciendo clic sobre él en el editor, sin necesidad de volver al modal.</div>`
+  },
+  s4: {
+    icon:'🎬', title:'Vídeos',
+    html:`
+      <p>Puedes insertar vídeos de cualquier plataforma. En el asistente, coloca el cursor donde quieras el vídeo y pulsa <strong>🎬 Vídeo</strong>.</p>
+      <p><strong>YouTube</strong></p>
+      <ol>
+        <li>Abre el vídeo en YouTube.</li>
+        <li>Copia la URL de la barra del navegador (por ejemplo: <code>https://youtube.com/watch?v=abc123</code>).</li>
+        <li>Pégala en el asistente — se convierte automáticamente al formato embed.</li>
+      </ol>
+      <p><strong>Mediateca EducaMadrid</strong></p>
+      <ol>
+        <li>Abre el vídeo en la Mediateca.</li>
+        <li>Pulsa el botón <strong>Compartir</strong> o <strong>Insertar</strong>.</li>
+        <li>Copia la URL del iframe (termina en <code>/fs</code>).</li>
+      </ol>
+      <p><strong>Cualquier otra plataforma</strong></p>
+      <p>Usa la URL del iframe embed que te proporcione la plataforma. Si la plataforma ofrece un código de tipo <code>&lt;iframe src="https://..."&gt;</code>, copia solo la parte de la URL (el valor del atributo <code>src</code>).</p>
+      <div class="help-tip">💡 La Mediateca de EducaMadrid es la opción más recomendada para contenido institucional, ya que gestiona los permisos de acceso y la protección del contenido.</div>`
+  },
+  s5: {
+    icon:'📄', title:'PDF incrustado',
+    html:`
+      <p>Para insertar un PDF que los alumnos puedan leer sin descargar:</p>
+      <ol>
+        <li><strong>Sube el PDF a tu Página en Moodle</strong>: entra en la Página → Editar → usa el gestor de archivos del editor para subir el PDF. Guarda la página.</li>
+        <li>Para obtener la URL: vuelve a editar, abre el gestor, haz clic en el PDF y copia la URL (<code>pluginfile.php/...</code>).</li>
+        <li>En el asistente, pulsa <strong>📄 PDF</strong>.</li>
+        <li>Pega la URL, escribe un título y elige la altura del visor.</li>
+        <li>Pulsa <strong>Insertar</strong>.</li>
+      </ol>
+      <p>En <strong>Chrome y Edge</strong> el visor no muestra botones de descarga ni impresión. En Firefox puede aparecer la barra del visor del navegador.</p>
+      <div class="help-tip">⚠️ La URL debe empezar por <code>pluginfile.php</code>, no por <code>draftfile.php</code>. La URL de borrador no funciona para los alumnos.</div>`
+  },
+  s6: {
+    icon:'📊', title:'Tablas',
+    html:`
+      <p>Tienes dos formas de trabajar con tablas:</p>
+      <p><strong>Desde Word (recomendado):</strong> diseña la tabla en Word con las celdas combinadas que necesites y pégala con <kbd>Ctrl+V</kbd>. El asistente detecta automáticamente el formato, los colores y las celdas combinadas.</p>
+      <p><strong>Desde el asistente:</strong></p>
+      <ol>
+        <li>Pulsa <strong>📊 Tabla</strong> en la barra de herramientas.</li>
+        <li>Indica el número de columnas, filas y si quieres fila de cabecera.</li>
+        <li>Pulsa <strong>Insertar tabla</strong>.</li>
+        <li>Haz clic en cualquier celda para editar su contenido.</li>
+      </ol>
+      <p>La cabecera aparece en rojo corporativo y las filas alternas en rosa claro.</p>
+      <div class="help-tip">💡 Dentro de las celdas puedes pulsar <kbd>Enter</kbd> para añadir saltos de línea sin salir de la celda.</div>`
+  },
+  s7: {
+    icon:'📋', title:'Copiar a Moodle',
+    html:`
+      <p>Una vez tengas el contenido listo en el editor:</p>
+      <ol>
+        <li>Revisa el resultado en la columna derecha (<strong>Vista previa</strong>).</li>
+        <li>Pulsa el botón rojo <strong>📋 Copiar para pegar en Moodle</strong>.</li>
+        <li>Ve a tu curso en Moodle y entra en la <strong>Página o Libro</strong> donde quieres pegar.</li>
+        <li>Activa la edición y abre el editor de texto.</li>
+        <li>En la barra del editor de Moodle, busca el botón <strong>&lt;/&gt;</strong> (editor HTML o código fuente).</li>
+        <li>Dentro del editor HTML de Moodle, pega con <kbd>Ctrl+V</kbd>.</li>
+        <li>Cierra el editor HTML y guarda la página.</li>
+      </ol>
+      <div class="help-tip">⚠️ No pegues directamente en el editor visual de Moodle (el que tiene botones de negrita, etc.) porque puede perder el formato. Usa siempre el editor HTML.</div>`
+  },
+  s9: {
+    icon:'✉️', title:'Contacto y sugerencias',
+    html:`
+      <p>Si encuentras algún problema al usar el asistente, tienes alguna sugerencia de mejora o quieres solicitar una nueva funcionalidad, escríbenos a:</p>
+      <div style="text-align:center;margin:20px 0;">
+        <a href="mailto:aulavirtualcbcm@madrid.org"
+           style="display:inline-block;background:#C0272D;color:#fff;padding:12px 28px;
+           border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;
+           box-shadow:0 4px 12px rgba(192,39,45,.3);">
+          ✉️ aulavirtualcbcm@madrid.org
+        </a>
+      </div>
+      <p>Al escribirnos, indica:</p>
+      <ul>
+        <li>Una descripción del problema o sugerencia.</li>
+        <li>El navegador que estás usando (Chrome, Edge, Firefox…).</li>
+        <li>Si es posible, un ejemplo del contenido que estabas trabajando.</li>
+      </ul>
+      <div class="help-tip">💡 Para incidencias urgentes que afecten a un curso activo, incluye el nombre del curso y la fecha límite en el asunto del correo.</div>`
+  },
+  s8: {
+    icon:'⌨️', title:'Atajos de teclado',
+    html:`
+      <p>Atajos útiles mientras trabajas en el editor:</p>
+      <ul>
+        <li><kbd>Ctrl+V</kbd> — pegar (desde Word, desde el portapapeles, o texto copiado del propio editor)</li>
+        <li><kbd>Ctrl+X</kbd> — cortar (para mover bloques de un sitio a otro)</li>
+        <li><kbd>Ctrl+Z</kbd> — deshacer el último cambio (también disponible con el botón ↩ Deshacer)</li>
+        <li><kbd>Ctrl+B</kbd> — negrita</li>
+        <li><kbd>Ctrl+I</kbd> — cursiva</li>
+        <li><kbd>Enter</kbd> al <strong>final</strong> de un bloque especial — sale del bloque y crea un párrafo nuevo después</li>
+        <li><kbd>Enter</kbd> al <strong>inicio</strong> de un bloque especial — inserta un párrafo vacío justo antes del bloque</li>
+        <li><kbd>Enter</kbd> dentro de una celda de tabla — añade un salto de línea sin salir de la celda</li>
+      </ul>
+      <p>Atajos en Word para aplicar estilos de título antes de copiar:</p>
+      <ul>
+        <li><kbd>Ctrl+Alt+1</kbd> — Título 1 (H1, cuadro rojo principal)</li>
+        <li><kbd>Ctrl+Alt+2</kbd> — Título 2 (H2, cuadro rojo oscuro)</li>
+        <li><kbd>Ctrl+Alt+3</kbd> — Título 3 (H3, borde izquierdo)</li>
+        <li><kbd>Ctrl+0</kbd> — volver al estilo Normal (párrafo)</li>
+      </ul>
+      <div class="help-tip">💡 Usar los estilos de título en Word garantiza que el asistente los detecte correctamente al pegar o abrir el archivo.</div>`
+  }
+};
+
+function openHelp()  {
+  showHelpCards();
+  document.getElementById('helpModal').classList.add('open');
+}
+function closeHelp() { document.getElementById('helpModal').classList.remove('open'); }
+
+function showHelpCards() {
+  document.getElementById('helpCards').style.display = 'block';
+  document.getElementById('helpSection').style.display = 'none';
+  document.getElementById('helpBody').scrollTop = 0;
+}
+
+function showHelpSection(id) {
+  const data = HELP_CONTENT[id];
+  if (!data) return;
+  document.getElementById('helpCards').style.display = 'none';
+  document.getElementById('helpSectionContent').innerHTML =
+    '<div class="help-section-title"><span>' + data.icon + '</span>' + data.title + '</div>' +
+    '<div class="help-section-body">' + data.html + '</div>';
+  document.getElementById('helpSection').style.display = 'block';
+  document.getElementById('helpBody').scrollTop = 0;
+}
+
+document.getElementById('helpModal').addEventListener('click', e => {
+  if (e.target.id === 'helpModal') closeHelp();
+});
+document.getElementById('helpModal').addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeHelp();
+});
+
+// ══════════════════════════════════════════════════════════════
+//  TABLAS EDITABLES — hacer celdas editables al insertarlas
+// ══════════════════════════════════════════════════════════════
+// Al insertar HTML en el editor, las celdas <td>/<th> deben ser
+// editables. MutationObserver detecta tablas nuevas y les añade
+// contenteditable a cada celda.
+const tableObserver = new MutationObserver(mutations => {
+  mutations.forEach(m => {
+    m.addedNodes.forEach(node => {
+      if (node.nodeType !== 1) return;
+      const cells = node.querySelectorAll ? node.querySelectorAll('td, th') : [];
+      cells.forEach(cell => {
+        if (!cell.getAttribute('contenteditable')) {
+          cell.setAttribute('contenteditable', 'true');
+          cell.style.outline = 'none';
+          cell.style.cursor = 'text';
+          cell.addEventListener('input', () => {
+            clearTimeout(refreshTimer);
+            refreshTimer = setTimeout(refreshOutput, 300);
+          });
+        }
+      });
+    });
+  });
+});
+tableObserver.observe(editor, { childList: true, subtree: true });
+
+const styleEl = document.createElement('style');
+styleEl.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+document.head.appendChild(styleEl);
+</script>
+</body>
+</html>
