@@ -106,7 +106,7 @@ main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0;}
 .be-note{background:#c2410c;} .be-info{background:#0277bd;} .be-tip{background:#0d9488;}
 .be-step{background:#4338ca;} .be-quote{background:#546e7a;} .be-extra{background:#6b7280;}
 .be-list{background:#374151;} .be-table{background:#1565c0;} .be-sep{background:#94a3b8;}
-.be-img{background:#0e7490;} .be-video{background:#7c3aed;} .be-pdf{background:#b91c1c;}
+.be-img{background:#0e7490;} .be-video{background:#7c3aed;} .be-pdf{background:#b91c1c;} .be-ppt{background:#c2571a;}
 
 /* ── BARRA DE FORMATO ── */
 .format-bar{
@@ -318,6 +318,7 @@ main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0;}
   letter-spacing:.5px;color:var(--text);white-space:nowrap;
 }
 .be-practice{background:#0f766e;}
+.be-def{background:#455a64;}
 
 /* Action bar buttons */
 .btn-action.undo:hover{color:#2563eb;border-color:#2563eb;background:rgba(37,99,235,.06);}
@@ -447,6 +448,7 @@ kbd{
         <button class="btn-el be-practice" onclick="addBlock('practice')">🛠️ Práctica</button>
         <button class="btn-el be-quote" onclick="addBlock('quote')">«» Cita</button>
         <button class="btn-el be-extra" onclick="addBlock('extra')">📚 Extra</button>
+        <button class="btn-el be-def"   onclick="addBlock('def')">📖 Definición</button>
       </div>
       <div class="toolbar-section">
         <span class="toolbar-label">Recursos</span>
@@ -454,6 +456,7 @@ kbd{
         <button class="btn-el be-img"   onclick="openMediaModal('imgurl')" style="background:#0e9488;">🔗 Imagen URL</button>
         <button class="btn-el be-video" onclick="openMediaModal('video')">🎬 Vídeo</button>
         <button class="btn-el be-pdf"   onclick="openMediaModal('pdf')">📄 PDF</button>
+        <button class="btn-el be-ppt"   onclick="openMediaModal('ppt')">📊 Presentación</button>
       </div>
     </div>
 
@@ -750,6 +753,9 @@ const EX = {
   extra:'display:inline-block;background-color:#f9fafb;border:1px solid #d1d5db;border-left:4px solid #6b7280;color:#374151;padding:10px 18px;border-radius:0 6px 6px 6px;font-family:Arial,sans-serif;font-size:14px;font-weight:600;line-height:1.6;',
   // Práctica: verde azulado — ejercicio, actividad práctica
   practice:'display:inline-block;background-color:#f0fdfa;border:2px solid #0f766e;border-left:6px solid #0f766e;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;',
+  // Definición: cabecera gris + cuerpo con borde — patrón glosario
+  defterm:'display:block;background-color:#eeeeee;color:#263238;padding:10px 14px;border-radius:6px 6px 0 0;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;line-height:1.4;',
+  defbody:'display:block;padding:12px 14px;border:1px solid #e0e0e0;border-top:none;border-radius:0 0 6px 6px;font-family:Arial,sans-serif;font-size:15px;line-height:1.7;color:#2d2d2d;',
   // ── MISCELÁNEOS ──────────────────────────────────────────────
   body:   'display:inline-block;padding:6px 10px;color:#2d2d2d;font-family:Arial,sans-serif;font-size:15px;line-height:1.8;',
   list:   'font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;',
@@ -1546,6 +1552,7 @@ const BLOCK_CFG = {
   practice: { defaultText:'🛠️ Práctica: Realiza el siguiente ejercicio siguiendo los pasos indicados por el instructor.' },
   divider:{ isSep:true },
   list:   { isList:true },
+  def:    { isDef:true },
 };
 
 function addBlock(type) {
@@ -1555,6 +1562,11 @@ function addBlock(type) {
     html = '<hr style="' + EX.divider + '">';
   } else if (cfg.isList) {
     html = '<ul style="' + EX.ul + '"><li style="' + EX.li + '">Elemento 1</li><li style="' + EX.li + '">Elemento 2</li><li style="' + EX.li + '">Elemento 3</li></ul>';
+  } else if (cfg.isDef) {
+    html = '<div style="margin:16px 0;">'
+         + '<div style="' + EX.defterm + '" contenteditable="true">Término o concepto</div>'
+         + '<div style="' + EX.defbody + '" contenteditable="true">Escribe aquí la definición o explicación del término.</div>'
+         + '</div>';
   } else {
     html = '<div style="margin:12px 0;"><div style="' + EX[type] + '" contenteditable="true">' + esc(cfg.defaultText) + '</div></div>';
   }
@@ -1652,6 +1664,34 @@ const MEDIA_CFG = {
         </span>
       </label>
     </div>`
+  },
+  ppt: {
+    title:'📊 Insertar presentación PowerPoint',
+    label:'URL de la presentación',
+    hint: 'Pega la URL según el origen. Ver opciones de compatibilidad abajo.',
+    placeholder:'https://... (OneDrive, Google Slides, SharePoint o pluginfile Moodle)',
+    extra:`<div style="margin-top:4px;">
+      <label class="modal-label">Título de la presentación</label>
+      <input id="pptCaption" class="modal-input" type="text"
+        style="font-size:13px;text-align:left;font-weight:400;letter-spacing:0;"
+        placeholder="Título que aparecerá debajo de la presentación">
+    </div>
+    <div style="margin-top:4px;">
+      <label class="modal-label">Altura del visor</label>
+      <select id="pptHeight" class="modal-input" style="font-size:13px;text-align:left;font-weight:400;">
+        <option value="500px">Compacto (~500px)</option>
+        <option value="600px" selected>Normal (~600px)</option>
+        <option value="75vh">75% de la pantalla</option>
+        <option value="90vh">90% de la pantalla</option>
+      </select>
+    </div>
+    <div style="margin-top:10px;background:#fff8f0;border:1.5px solid #f59e0b;border-radius:8px;padding:10px 12px;font-size:11px;color:#374151;line-height:1.6;">
+      <strong style="color:#92400e;">Fuentes compatibles:</strong><br>
+      • <strong>OneDrive / SharePoint:</strong> abre la presentación → Compartir → Insertar → copia la URL del <code>src</code> del iframe.<br>
+      • <strong>Google Slides:</strong> Archivo → Publicar en la web → Insertar → copia la URL del iframe. Se detecta automáticamente.<br>
+      • <strong>Moodle (pluginfile.php):</strong> solo funciona si el curso permite acceso de invitado, o si el archivo es público.<br>
+      • <strong>Cualquier URL embed</strong> de otra plataforma también funciona.
+    </div>`
   }
 };
 
@@ -1702,8 +1742,11 @@ function compressBase64Image(dataUrl, maxW, quality, cb) {
     let w = img.width, h = img.height;
     if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
     canvas.width = w; canvas.height = h;
-    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-    cb(canvas.toDataURL('image/jpeg', quality));
+    const ctx = canvas.getContext('2d');
+    const useJpeg = dataUrl.startsWith('data:image/jpeg') || dataUrl.startsWith('data:image/jpg');
+    if (useJpeg) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h); }
+    ctx.drawImage(img, 0, 0, w, h);
+    cb(useJpeg ? canvas.toDataURL('image/jpeg', quality) : canvas.toDataURL('image/png'));
   };
   img.onerror = function() { cb(dataUrl); };
   img.src = dataUrl;
@@ -1790,16 +1833,28 @@ function handleDocxFile(file) {
 
 function compressAndInsertImage(file, width, caption) {
   const MAX_W = 1200, QUALITY = 0.82;
+
+  // PNG, GIF y WebP pueden tener transparencia — conservar como PNG.
+  // JPEG no tiene alpha → comprimir con JPEG para reducir peso.
+  const useJpeg = /^image\/(jpe?g)$/i.test(file.type);
+
   const reader = new FileReader();
+  reader.onerror = function() { showToast('❌ No se pudo leer la imagen'); };
   reader.onload = function(ev) {
     const img = new Image();
+    img.onerror = function() { showToast('❌ Formato de imagen no válido'); };
     img.onload = function() {
       const canvas = document.createElement('canvas');
       let w = img.width, h = img.height;
       if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
       canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      const dataUrl = canvas.toDataURL('image/jpeg', QUALITY);
+      const ctx = canvas.getContext('2d');
+      // Fondo blanco solo para JPEG (evita negro en zonas transparentes)
+      if (useJpeg) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h); }
+      ctx.drawImage(img, 0, 0, w, h);
+      const dataUrl = useJpeg
+        ? canvas.toDataURL('image/jpeg', QUALITY)
+        : canvas.toDataURL('image/png');
       const kb = Math.round(dataUrl.length * 0.75 / 1024);
       if (kb > 800) showToast('⚠️ Imagen grande (' + kb + ' KB) — considera reducirla', 4000);
       const html = buildImageHTML(dataUrl, caption, width);
@@ -1867,6 +1922,35 @@ function confirmMedia() {
     return;
   }
 
+  if (currentMediaType === 'ppt') {
+    const raw     = (document.getElementById('mediaUrl')  || {value:''}).value.trim();
+    const caption = (document.getElementById('pptCaption')|| {value:''}).value.trim();
+    const height  = (document.getElementById('pptHeight') || {value:'600px'}).value;
+    if (!raw) { showToast('⚠️ Introduce la URL de la presentación'); return; }
+
+    let embedUrl = raw;
+
+    // Google Slides: convertir URL de publicación a embed
+    const gsMatch = raw.match(/docs\.google\.com\/presentation\/d\/([^/]+)/);
+    if (gsMatch) {
+      embedUrl = 'https://docs.google.com/presentation/d/' + gsMatch[1] + '/embed?start=false&loop=false&delayms=3000';
+    }
+    // OneDrive/SharePoint: si pegan la URL de vista previa, construir embed de Office Online
+    else if (/onedrive\.live\.com|sharepoint\.com/.test(raw) && !raw.includes('view.officeapps')) {
+      embedUrl = 'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(raw);
+    }
+    // URL directa a .pptx → visor de Office Online
+    else if (/\.pptx?(\?|$)/i.test(raw) && !raw.includes('view.officeapps')) {
+      embedUrl = 'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(raw);
+    }
+    // Resto: usar tal cual (embed propio de la plataforma, iframe ya preparado, etc.)
+
+    const html = buildPPTHTML(embedUrl, caption, height);
+    closeMediaModal();
+    insertHTMLAtCursor(html);
+    return;
+  }
+
   const url = (document.getElementById('mediaUrl') || {value:''}).value.trim();
   if (!url) { showToast('⚠️ Introduce una URL'); return; }
   let html = '';
@@ -1909,6 +1993,22 @@ function confirmMedia() {
   }
 
   if (html) { closeMediaModal(); insertHTMLAtCursor(html); }
+}
+
+// ── Construir HTML de presentación ──
+function buildPPTHTML(embedUrl, caption, height) {
+  return '<div style="width:100%;margin:20px auto;background:#fff;border:1px solid #d1d1d1;'
+       + 'border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Arial,sans-serif;">'
+       + '<div style="position:relative;width:100%;height:' + height + ';background:#f5f5f5;">'
+       + '<iframe src="' + embedUrl + '" '
+       + 'style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" '
+       + 'allowfullscreen></iframe>'
+       + '</div>'
+       + '<div style="padding:10px 16px;background:#f9f9f9;border-top:1px solid #d1d1d1;text-align:center;">'
+       + '<span contenteditable="true" style="font-weight:700;color:#333;font-size:1em;display:block;outline:none;cursor:text;" '
+       + 'title="Haz clic para editar el título">📊 ' + (caption ? esc(caption) : 'Haz clic para escribir el título') + '</span>'
+       + '</div>'
+       + '</div>';
 }
 
 document.getElementById('mediaModal').addEventListener('click', e => {
@@ -2058,11 +2158,15 @@ function getBlockLabel(el) {
   // Imagen
   if (el.querySelector && el.querySelector('img')) return '── Imagen';
 
-  // Vídeo
+  // Definición
+  if (el.querySelector && el.querySelector('[style*="background-color:#eeeeee"]')) return '── Definición';
+
+  // Vídeo / Presentación
   if (el.querySelector && el.querySelector('iframe')) {
     const src = (el.querySelector('iframe').getAttribute('src') || '');
     if (src.includes('youtube') || src.includes('youtu')) return '── Vídeo: YouTube';
     if (src.includes('educamadrid')) return '── Vídeo: Mediateca EducaMadrid';
+    if (src.includes('docs.google.com/presentation') || src.includes('view.officeapps') || src.includes('sharepoint') || src.includes('onedrive')) return '── Presentación PowerPoint';
     return '── Vídeo';
   }
 
