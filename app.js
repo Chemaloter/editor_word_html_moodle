@@ -1355,9 +1355,48 @@ function showToast(msg, duration) {
 //  FORMATO DE TEXTO
 // ══════════════════════════════════════════════════════════════
 function applyFmt(cmd, val = null) {
-  saveBlockUndo(); // Permite deshacer el cambio con Ctrl+Z
+  saveBlockUndo();
   editor.focus();
-  document.execCommand(cmd, false, val);
+
+  if (cmd === 'fontSize') {
+    // Mapeo de valores 1-7 a píxeles reales (estándar Moodle)
+    const sizeMap = {
+      '1': '10px',
+      '2': '13px',
+      '3': '16px', // Normal
+      '4': '18px',
+      '5': '24px',
+      '6': '32px',
+      '7': '48px'
+    };
+    
+    // Forzamos al navegador a usar estilos CSS en lugar de etiquetas <font>
+    document.execCommand('styleWithCSS', false, true);
+    document.execCommand(cmd, false, val);
+    
+    // Si el navegador ha creado un <font> a pesar de lo anterior, lo corregimos
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      const parent = selection.getRangeAt(0).commonAncestorContainer.parentElement;
+      if (parent && parent.nodeName === 'FONT') {
+        const span = document.createElement('span');
+        span.style.fontSize = sizeMap[val] || '16px';
+        if (parent.face) span.style.fontFamily = parent.face;
+        span.innerHTML = parent.innerHTML;
+        parent.parentNode.replaceChild(span, parent);
+      }
+    }
+    document.execCommand('styleWithCSS', false, false);
+  } else if (cmd === 'fontName') {
+    // También forzamos CSS para el nombre de la fuente
+    document.execCommand('styleWithCSS', false, true);
+    document.execCommand(cmd, false, val);
+    document.execCommand('styleWithCSS', false, false);
+  } else {
+    // Comandos normales (bold, italic, etc.)
+    document.execCommand(cmd, false, val);
+  }
+
   updateFormatButtons();
   refreshOutput();
 }
@@ -1373,14 +1412,20 @@ function updateFormatButtons() {
   // 2. Actualizar selector de Fuente
   const fontNameSel = document.querySelector('select[onchange*="fontName"]');
   if (fontNameSel) {
-    const currentFont = document.queryCommandValue('fontName').replace(/"/g, "");
+    let currentFont = document.queryCommandValue('fontName').replace(/"/g, "");
     fontNameSel.value = currentFont || "Arial"; 
   }
 
   // 3. Actualizar selector de Tamaño
   const fontSizeSel = document.querySelector('select[onchange*="fontSize"]');
   if (fontSizeSel) {
-    const currentSize = document.queryCommandValue('fontSize');
+    let currentSize = document.queryCommandValue('fontSize');
+    
+    // Si el navegador nos devuelve un tamaño en PX (ej: "24px"), lo mapeamos de vuelta al 1-7
+    if (currentSize && currentSize.includes('px')) {
+        const pxMap = { '10px':'1','13px':'2','16px':'3','18px':'4','24px':'5','32px':'6','48px':'7' };
+        currentSize = pxMap[currentSize] || "3";
+    }
     fontSizeSel.value = currentSize || "3";
   }
 }
