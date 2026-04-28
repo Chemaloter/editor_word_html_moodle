@@ -1354,19 +1354,35 @@ function showToast(msg, duration) {
 // ══════════════════════════════════════════════════════════════
 //  FORMATO DE TEXTO
 // ══════════════════════════════════════════════════════════════
-function applyFmt(cmd) {
+function applyFmt(cmd, val = null) {
+  saveBlockUndo(); // Permite deshacer el cambio con Ctrl+Z
   editor.focus();
-  document.execCommand(cmd, false, null);
+  document.execCommand(cmd, false, val);
   updateFormatButtons();
   refreshOutput();
 }
 
 function updateFormatButtons() {
+  // 1. Botones de estado (Negrita, Cursiva, etc.)
   const cmds = ['bold','italic','underline','justifyLeft','justifyCenter','justifyRight'];
   cmds.forEach(cmd => {
     const btns = document.querySelectorAll('.fmt-btn[onclick*="' + cmd + '"]');
     btns.forEach(btn => btn.classList.toggle('active', document.queryCommandState(cmd)));
   });
+
+  // 2. Actualizar selector de Fuente
+  const fontNameSel = document.querySelector('select[onchange*="fontName"]');
+  if (fontNameSel) {
+    const currentFont = document.queryCommandValue('fontName').replace(/"/g, "");
+    fontNameSel.value = currentFont || "Arial"; 
+  }
+
+  // 3. Actualizar selector de Tamaño
+  const fontSizeSel = document.querySelector('select[onchange*="fontSize"]');
+  if (fontSizeSel) {
+    const currentSize = document.queryCommandValue('fontSize');
+    fontSizeSel.value = currentSize || "3";
+  }
 }
 
 editor.addEventListener('keyup',   updateFormatButtons);

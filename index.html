@@ -77,6 +77,24 @@
         <button class="fmt-btn" onclick="applyFmt('bold')" title="Negrita (Ctrl+B)"><strong>N</strong></button>
         <button class="fmt-btn" onclick="applyFmt('italic')" title="Cursiva (Ctrl+I)"><em>K</em></button>
         <button class="fmt-btn" onclick="applyFmt('underline')" title="Subrayado (Ctrl+U)"><u>S</u></button>
+
+<select class="t-select" onchange="applyFmt('fontName', this.value)" title="Tipo de letra">
+          <option value="Arial" selected>Arial</option>
+          <option value="Verdana">Verdana</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Courier New">Courier New</option>
+          <option value="Georgia">Georgia</option>
+        </select>
+
+        <select class="t-select" onchange="applyFmt('fontSize', this.value)" title="Tamaño de letra">
+          <option value="3" selected>Tamaño normal</option>
+          <option value="1">Muy pequeño</option>
+          <option value="2">Pequeño</option>
+          <option value="4">Medio</option>
+          <option value="5">Grande</option>
+          <option value="6">Extra grande</option>
+        </select>
+
       </div>
       <div class="format-sep"></div>
       <div class="format-group">
