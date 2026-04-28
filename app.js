@@ -552,10 +552,23 @@ editor.addEventListener('keydown', function(e) {
   const range = sel.getRangeAt(0);
   const node  = range.startContainer;
   const el    = node.nodeType === 3 ? node.parentElement : node;
-  if (el.closest('td, th')) return;
+  
+  // 1. Añadimos 'li' a las excepciones para que las listas funcionen nativamente dentro del bloque
+  if (el.closest('td, th, li')) return; 
+  
   const styled = el.closest('div[style*="inline-block"]');
   if (!styled) return;
+  
   e.preventDefault();
+
+  // 2. Si es un Enter normal, insertamos un salto de línea DENTRO del bloque
+  if (!e.shiftKey) {
+    document.execCommand('insertLineBreak', false, null);
+    refreshOutput();
+    return;
+  }
+
+  // 3. Si pulsa SHIFT + ENTER, ejecutamos la lógica original para SALIR del bloque
   saveBlockUndo();
   const container = styled.closest('div[style*="margin"]') || styled;
   const beforeRange = document.createRange();
@@ -1416,10 +1429,16 @@ const HELP_CONTENT = {
 </div>
 
 <div class="help-tip">
-💡 Pulsa <kbd>Enter</kbd> dentro de un bloque para crear un párrafo fuera de él sin romper el diseño.
+💡 <strong>Escribir en bloques:</strong> Pulsa <kbd>Enter</kbd> para añadir texto o crear listas <strong>dentro</strong> del propio bloque.
 </div>
 
-      <div class="help-tip">💡 Para mover un bloque, selecciónalo con el ratón, córtalo con <kbd>Ctrl+X</kbd> y pégalo en otra posición con <kbd>Ctrl+V</kbd>.</div>`
+<div class="help-tip">
+💡 <strong>Salir del bloque:</strong> Pulsa <kbd>Mayús</kbd> + <kbd>Enter</kbd> para finalizar el bloque y crear un párrafo nuevo debajo.
+</div>
+
+<div class="help-tip">
+💡 <strong>Mover bloques:</strong> Selecciónalo con el ratón, córtalo con <kbd>Ctrl+X</kbd> y pégalo donde quieras con <kbd>Ctrl+V</kbd>.
+</div>`
   },
   s3: {
     icon:'🖼️', title:'Imágenes',
