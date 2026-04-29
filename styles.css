@@ -14,7 +14,7 @@
   --success:#16a34a;
   --warn:#d97706;
   --radius:12px;
-  --font-ui:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;
+  --font-ui: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-hd:'Barlow Condensed','Impact',sans-serif;
   --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);
 }
@@ -98,7 +98,7 @@ main{flex:1;display:flex;flex-direction:column;min-height:0;}
 .be-step{background:#4338ca;} .be-quote{background:#546e7a;} .be-extra{background:#6b7280;}
 .be-list{background:#374151;} .be-table{background:#1565c0;} .be-sep{background:#94a3b8;}
 .be-img{background:#0e7490;} .be-video{background:#7c3aed;} .be-pdf{background:#b91c1c;} .be-ppt{background:#c2571a;}
-.be-practice{background:#0f766e;}
+.be-practice{background:#0f766e;} .be-sequence{background:#2e7d32;}
 .be-def{background:#455a64;}
 
 /* ── BARRA DE FORMATO ── */
@@ -130,7 +130,7 @@ main{flex:1;display:flex;flex-direction:column;min-height:0;}
 .editor-area{
   background:#fff;border-radius:var(--radius);
   min-height:100%;padding:22px 26px;
-  font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#1f2937;
+  font-family:var(--font-ui);font-size:16px;line-height:1.8;color:#1f2937;
   outline:none;cursor:text;word-break:break-word;
   border:1.5px solid var(--border);
   transition:border-color .2s;

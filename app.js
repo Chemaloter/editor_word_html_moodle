@@ -2,34 +2,34 @@
 //  ESTILOS DE EXPORTACIÓN MOODLE (inline, TinyMCE/Atto compatible)
 // ══════════════════════════════════════════════════════════════
 const EX = {
-  h1:   'display:inline-block;background-color:#C0272D;color:#ffffff;padding:12px 24px;border-radius:6px;font-family:Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:0.3px;line-height:1.3;',
-  h2:   'display:inline-block;background-color:#8E1B1F;color:#ffffff;padding:10px 20px;border-radius:6px;font-family:Arial,sans-serif;font-size:17px;font-weight:700;letter-spacing:0.2px;line-height:1.3;',
-  h3:   'display:inline-block;background-color:#fff0f0;color:#6b1215;border-left:4px solid #C0272D;padding:8px 18px;border-radius:0 5px 5px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.4;',
-  h4:   'display:inline-block;color:#C0272D;border-bottom:2px solid #e8b4b5;padding:4px 2px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.1px;',
-  h5:   'display:inline-block;color:#7a1518;font-family:Arial,sans-serif;font-size:13px;font-weight:700;',
-  h6:   'display:inline-block;color:#999;font-family:Arial,sans-serif;font-size:12px;font-weight:700;font-style:italic;',
-  p:    'font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;',
-  ul:   'font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;padding-left:28px;',
-  ol:   'font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;padding-left:28px;',
-  li:   'margin:5px 0;font-weight:normal;',
-  table:'width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px;',
-  th:   'background-color:#C0272D;color:#ffffff;padding:10px 14px;text-align:left;font-weight:700;border:1px solid #9b1f23;font-size:14px;',
-  td:   'padding:9px 14px;border:1px solid #e0e0e0;color:#2d2d2d;vertical-align:middle;font-size:14px;line-height:1.6;',
-  tdalt:'padding:9px 14px;border:1px solid #e0e0e0;color:#2d2d2d;vertical-align:middle;background-color:#fdf5f5;font-size:14px;line-height:1.6;',
-  goal: 'display:inline-block;background-color:#f0faf1;border-left:5px solid #2e7d32;color:#1a4d1e;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;',
-  think:'display:inline-block;background-color:#faf5ff;border-left:5px solid #7b1fa2;color:#4a1570;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-style:italic;line-height:1.6;',
-  note: 'display:inline-block;background-color:#fffbeb;border-top:4px solid #f59e0b;border-left:4px solid #f59e0b;color:#78350f;padding:12px 20px;border-radius:0 6px 6px 6px;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;',
-  info: 'display:inline-block;background-color:#eff6ff;border-left:5px solid #1d4ed8;color:#1e3a8a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:600;line-height:1.6;',
-  tip:  'display:inline-block;background-color:#f0fdfa;border-left:5px solid #0d9488;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:600;line-height:1.6;',
-  step: 'display:inline-block;background-color:#eef2ff;border-left:5px solid #4338ca;color:#1e1b4b;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;',
-  quote:'display:inline-block;background-color:#f8fafc;border-left:5px solid #94a3b8;color:#334155;padding:12px 22px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-style:italic;line-height:1.7;',
-  extra:'display:inline-block;background-color:#f9fafb;border:1px solid #d1d5db;border-left:4px solid #6b7280;color:#374151;padding:10px 18px;border-radius:0 6px 6px 6px;font-family:Arial,sans-serif;font-size:14px;font-weight:600;line-height:1.6;',
-  practice:'display:inline-block;background-color:#f0fdfa;border:2px solid #0f766e;border-left:6px solid #0f766e;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;',
-  defterm:'display:block;background-color:#eeeeee;color:#263238;padding:10px 14px;border-radius:6px 6px 0 0;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;line-height:1.4;',
-  defbody:'display:block;padding:12px 14px;border:1px solid #e0e0e0;border-top:none;border-radius:0 0 6px 6px;font-family:Arial,sans-serif;font-size:15px;line-height:1.7;color:#2d2d2d;',
-  body:   'display:inline-block;padding:6px 10px;color:#2d2d2d;font-family:Arial,sans-serif;font-size:15px;line-height:1.8;',
-  list:   'font-family:Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;',
-  divider:'display:block;border:none;border-top:2px solid #e5e7eb;margin:16px 0;',
+  h1:   "display:inline-block;background-color:#C0272D;color:#ffffff;padding:12px 24px;border-radius:6px;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:0.3px;line-height:1.3;",
+  h2:   "display:inline-block;background-color:#8E1B1F;color:#ffffff;padding:10px 20px;border-radius:6px;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:17px;font-weight:700;letter-spacing:0.2px;line-height:1.3;",
+  h3:   "display:inline-block;background-color:#fff0f0;color:#6b1215;border-left:4px solid #C0272D;padding:8px 18px;border-radius:0 5px 5px 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.4;",
+  h4:   "display:inline-block;color:#C0272D;border-bottom:2px solid #e8b4b5;padding:4px 2px;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.1px;",
+  h5:   "display:inline-block;color:#7a1518;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;font-weight:700;",
+  h6:   "display:inline-block;color:#999;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12px;font-weight:700;font-style:italic;",
+  p:    "font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;",
+  ul:   "font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;padding-left:28px;",
+  ol:   "font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;padding-left:28px;",
+  li:   "margin:5px 0;font-weight:normal;",
+  table:"width:100%;border-collapse:collapse;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;",
+  th:   "background-color:#C0272D;color:#ffffff;padding:10px 14px;text-align:left;font-weight:700;border:1px solid #9b1f23;font-size:14px;",
+  td:   "padding:9px 14px;border:1px solid #e0e0e0;color:#2d2d2d;vertical-align:middle;font-size:14px;line-height:1.6;",
+  tdalt:"padding:9px 14px;border:1px solid #e0e0e0;color:#2d2d2d;vertical-align:middle;background-color:#fdf5f5;font-size:14px;line-height:1.6;",
+  goal: "display:inline-block;background-color:#f0faf1;border-left:5px solid #2e7d32;color:#1a4d1e;padding:12px 20px;border-radius:0 6px 6px 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;",
+  think:"display:inline-block;background-color:#faf5ff;border-left:5px solid #7b1fa2;color:#4a1570;padding:12px 20px;border-radius:0 6px 6px 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-style:italic;line-height:1.6;",
+  note: "display:inline-block;background-color:#fffbeb;border-top:4px solid #f59e0b;border-left:4px solid #f59e0b;color:#78350f;padding:12px 20px;border-radius:0 6px 6px 6px;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;",
+  info: "display:inline-block;background-color:#eff6ff;border-left:5px solid #1d4ed8;color:#1e3a8a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;line-height:1.6;",
+  tip:  "display:inline-block;background-color:#f0fdfa;border-left:5px solid #0d9488;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;line-height:1.6;",
+  step: "display:inline-block;background-color:#eef2ff;border-left:5px solid #4338ca;color:#1e1b4b;padding:12px 20px;border-radius:0 6px 6px 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;",
+  quote:"display:inline-block;background-color:#f8fafc;border-left:5px solid #94a3b8;color:#334155;padding:12px 22px;border-radius:0 6px 6px 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-style:italic;line-height:1.7;",
+  extra:"display:inline-block;background-color:#f9fafb;border:1px solid #d1d5db;border-left:4px solid #6b7280;color:#374151;padding:10px 18px;border-radius:0 6px 6px 6px;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;line-height:1.6;",
+  practice:"display:inline-block;background-color:#f0fdfa;border:2px solid #0f766e;border-left:6px solid #0f766e;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;",
+  defterm:"display:block;background-color:#eeeeee;color:#263238;padding:10px 14px;border-radius:6px 6px 0 0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:bold;line-height:1.4;",
+  defbody:"display:block;padding:12px 14px;border:1px solid #e0e0e0;border-top:none;border-radius:0 0 6px 6px;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.7;color:#2d2d2d;",
+  body:   "display:inline-block;padding:6px 10px;color:#2d2d2d;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;",
+  list:   "font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;",
+  divider:"display:block;border:none;border-top:2px solid #e5e7eb;margin:16px 0;"
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -702,12 +702,50 @@ const BLOCK_CFG = {
   divider:{ isSep:true },
   list:   { isList:true },
   def:    { isDef:true },
+sequence: { isSequence:true }, // <--- LÍNEA NUEVA
 };
 
 function addBlock(type) {
   const cfg = BLOCK_CFG[type]; if (!cfg) return;
+  saveBlockUndo(); // Guardamos el estado para que funcione el Ctrl+Z (Deshacer)
   let html = '';
-  if (cfg.isSep) {
+
+  if (cfg.isSequence) {
+    // 1. Preguntamos el número de pasos
+    const numSteps = prompt("¿Cuántos pasos tiene la secuencia operativa?", "Escribe número de pasos de tu secuencia");
+    if (!numSteps || isNaN(numSteps) || numSteps < 1) return;
+
+    // 2. Generamos los pasos dinámicamente
+    let stepsHtml = '';
+    for (let i = 1; i <= parseInt(numSteps); i++) {
+      const isOdd = i % 2 !== 0;
+      const color = isOdd ? '#c0272d' : '#1a1a1a'; // Rojo para impares, negro para pares
+      const shadow = isOdd ? 'box-shadow: 0 3px 6px rgba(192,39,45,0.2);' : '';
+
+      stepsHtml += `
+        <div style="display: flex; gap: 20px; margin-bottom: 25px;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: ${color}; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; ${shadow}">${i}</div>
+          <div style="border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; width: 100%;">
+            <h4 contenteditable="true" style="margin: 0 0 5px 0; color: #1a1a1a; font-size: 1.1rem; font-family: 'Segoe UI', Roboto, Arial, sans-serif;">Título del Paso ${i}</h4>
+            <p contenteditable="true" style="margin: 0; color: #666; font-size: 0.95rem; line-height: 1.6; font-family: 'Segoe UI', Roboto, Arial, sans-serif;">Descripción detallada de la fase operativa ${i}.</p>
+          </div>
+        </div>`;
+    }
+
+    // 3. Montamos el bloque completo
+    html = `
+      <div class="sequence-block" style="margin: 30px 0; font-family: 'Segoe UI', Roboto, Arial, sans-serif;">
+        <div style="max-width: 850px; margin: auto; background-color: #ffffff; padding: 10px;">
+          <div style="border: 1px solid #eee; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+            <p style="color: #c0272d; font-size: 0.80rem; text-transform: uppercase; margin-bottom: 25px; font-weight: 800; letter-spacing: 1.5px; border-bottom: 1px solid #eee; padding-bottom: 5px; display: inline-block;">
+              Bloque: Secuencia Operativa
+            </p>
+            ${stepsHtml}
+          </div>
+        </div>
+      </div><p><br></p>`;
+
+  } else if (cfg.isSep) {
     html = '<hr style="' + EX.divider + '">';
   } else if (cfg.isList) {
     html = '<ul style="' + EX.ul + '"><li style="' + EX.li + '">Elemento 1</li><li style="' + EX.li + '">Elemento 2</li><li style="' + EX.li + '">Elemento 3</li></ul>';
@@ -719,6 +757,7 @@ function addBlock(type) {
   } else {
     html = '<div style="margin:12px 0;"><div style="' + EX[type] + '" contenteditable="true">' + esc(cfg.defaultText) + '</div></div>';
   }
+  
   insertHTMLAtCursor(html);
 }
 
