@@ -1871,3 +1871,18 @@ document.getElementById('file-input').addEventListener('change', function() {
     setTimeout(() => { this.value = ''; }, 500);
   }
 });
+
+
+// ══════════════════════════════════════════════════════════════
+//  MODAL GENERADOR DE MANIOBRAS
+// ══════════════════════════════════════════════════════════════
+function openManiobrasModal() {
+  captureEditorCursor();
+  document.getElementById('maniobrasModal').classList.add('open');
+}
+function closeManiobrasModal() {
+  document.getElementById('maniobrasModal').classList.remove('open');
+}
+document.getElementById('maniobrasModal').addEventListener('click', e => {
+  if (e.target.id === 'maniobrasModal') closeManiobrasModal();
+});
