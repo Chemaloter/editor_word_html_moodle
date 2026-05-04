@@ -1729,6 +1729,55 @@ s11: {
   💡 Esto evita problemas de compatibilidad con Moodle y asegura que el diseño se mantenga estable.
   </div>
   `
+},
+
+s12: {
+  icon:'🏗️',
+  title:'Generador de Maniobras de Parque',
+  html:`
+    <p>El Generador de Maniobras crea automáticamente el HTML completo de una ficha de práctica del CBCM, lista para insertar en Moodle. Se abre desde el botón <strong>🏗️ Maniobra</strong> de la barra de herramientas.</p>
+
+    <p><strong>Cómo usarlo — paso a paso:</strong></p>
+    <ol>
+      <li>Pulsa <strong>🏗️ Maniobra</strong> en la barra de herramientas del editor.</li>
+      <li>Rellena los campos de cada pestaña siguiendo el orden (usa <strong>Siguiente →</strong> o haz clic directo sobre la pestaña).</li>
+      <li>Cuando hayas completado todos los datos, pulsa <strong>⚡ Generar HTML</strong> — el generador salta automáticamente a la pestaña de resultado.</li>
+      <li>Pulsa <strong>⬆️ Insertar en el editor</strong> para volcar el contenido directamente en el editor principal. La ventana se cierra sola.</li>
+    </ol>
+
+    <p><strong>Pestañas disponibles:</strong></p>
+    <ul>
+      <li><strong>1 · Cabecera:</strong> título de la práctica, subtítulo y código de instrucción técnica (IT).</li>
+      <li><strong>2 · Info General:</strong> descripción, objetivo pedagógico, destinatarios y escenario.</li>
+      <li><strong>3 · Recursos:</strong> EPIs, materiales y recursos multimedia (imágenes y vídeos de referencia).</li>
+      <li><strong>4 · Organización:</strong> descripción del grupo y rol editable del Jefe de Turno.</li>
+      <li><strong>5 · Desarrollo:</strong> documentación de referencia, vídeos explicativos, imágenes ilustrativas, pasos secuenciales y precauciones.</li>
+      <li><strong>6 · Plan SOS:</strong> todos los campos del anexo de emergencia son editables (señal, párrafos, acciones leve/grave, cierre).</li>
+      <li><strong>7 · Riesgos:</strong> tabla de evaluación de riesgos con tipo, causa, grado y medida preventiva.</li>
+      <li><strong>8 · Pie:</strong> fecha de revisión y teléfono CECOP.</li>
+      <li><strong>⚡ Generar:</strong> resultado final con opciones de insertar, copiar y previsualizar.</li>
+    </ul>
+
+    <div class="help-tip">
+      💡 <strong>Imágenes:</strong> en las pestañas Recursos y Desarrollo puedes añadir imágenes de dos formas — pegando una URL o seleccionando un archivo de tu equipo. Las imágenes locales se incrustan en base64 y no necesitan servidor.
+    </div>
+
+    <div class="help-tip">
+      💡 <strong>Vídeos:</strong> pega la URL de YouTube, YouTube Shorts, EducaMadrid o cualquier URL embed. El generador la convierte automáticamente en un reproductor incrustado.
+    </div>
+
+    <div class="help-tip">
+      💡 <strong>Varios vídeos:</strong> puedes añadir tantos vídeos como necesites en la pestaña Desarrollo usando el botón <strong>＋ Añadir vídeo</strong>.
+    </div>
+
+    <div class="help-tip">
+      💡 <strong>Plan SOS:</strong> el contenido por defecto refleja el protocolo estándar del CBCM. Puedes editarlo íntegramente si la maniobra requiere condiciones específicas.
+    </div>
+
+    <div class="help-tip">
+      🗑 <strong>Empezar de cero:</strong> usa el botón <strong>🗑 Borrar todo</strong> de la barra inferior para limpiar todos los campos y comenzar una maniobra nueva. Se pedirá confirmación antes de borrar.
+    </div>
+  `
 }
 
 };
