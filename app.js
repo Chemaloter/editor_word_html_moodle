@@ -12,19 +12,19 @@ const EX = {
   ul:   "font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;padding-left:28px;",
   ol:   "font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:10px 0;padding-left:28px;",
   li:   "margin:5px 0;font-weight:normal;",
-  table:"width:100%;border-collapse:collapse;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;",
-  th:   "background-color:#C0272D;color:#ffffff;padding:10px 14px;text-align:left;font-weight:700;border:1px solid #9b1f23;font-size:14px;",
-  td:   "padding:9px 14px;border:1px solid #e0e0e0;color:#2d2d2d;vertical-align:middle;font-size:14px;line-height:1.6;",
-  tdalt:"padding:9px 14px;border:1px solid #e0e0e0;color:#2d2d2d;vertical-align:middle;background-color:#fdf5f5;font-size:14px;line-height:1.6;",
-  goal: "display:inline-block;background-color:#f0faf1;border-left:5px solid #2e7d32;color:#1a4d1e;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;",
-  think:"display:inline-block;background-color:#faf5ff;border-left:5px solid #7b1fa2;color:#4a1570;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-style:italic;line-height:1.6;",
-  note: "display:inline-block;background-color:#fffbeb;border-top:4px solid #f59e0b;border-left:4px solid #f59e0b;color:#78350f;padding:12px 20px;border-radius:0 6px 6px 6px;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;",
-  info: "display:inline-block;background-color:#eff6ff;border-left:5px solid #1d4ed8;color:#1e3a8a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;line-height:1.6;",
-  tip:  "display:inline-block;background-color:#f0fdfa;border-left:5px solid #0d9488;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;line-height:1.6;",
-  step: "display:inline-block;background-color:#eef2ff;border-left:5px solid #4338ca;color:#1e1b4b;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;",
-  quote:"display:inline-block;background-color:#f8fafc;border-left:5px solid #94a3b8;color:#334155;padding:12px 22px;border-radius:0 6px 6px 0;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-style:italic;line-height:1.7;",
-  extra:"display:inline-block;background-color:#f9fafb;border:1px solid #d1d5db;border-left:4px solid #6b7280;color:#374151;padding:10px 18px;border-radius:0 6px 6px 6px;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;line-height:1.6;",
-  practice:"display:inline-block;background-color:#f0fdfa;border:2px solid #0f766e;border-left:6px solid #0f766e;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;line-height:1.6;",
+  table:"width:100%;border-collapse:separate;border-spacing:0;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;border:1px solid #edf0f4;border-radius:10px;overflow:hidden;background:#ffffff;",
+  th:   "background-color:#fff7f7;color:#9b1e23;padding:10px 14px;text-align:left;font-weight:800;border:none;border-right:1px solid #edf0f4;border-bottom:1px solid #edf0f4;font-size:13px;",
+  td:   "padding:9px 14px;border:none;border-right:1px solid #edf0f4;border-bottom:1px solid #edf0f4;color:#2d2d2d;vertical-align:middle;font-size:14px;line-height:1.6;",
+  tdalt:"padding:9px 14px;border:none;border-right:1px solid #edf0f4;border-bottom:1px solid #edf0f4;color:#2d2d2d;vertical-align:middle;background-color:#ffffff;font-size:14px;line-height:1.6;",
+  goal: "display:block;width:100%;max-width:800px;margin:14px auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;background-color:#f0faf1;border-left:5px solid #2e7d32;color:#1a4d1e;padding:12px 20px;border-radius:0 6px 6px 0;font-weight:700;line-height:1.6;",
+  think:"display:block;width:100%;max-width:800px;margin:14px auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;background-color:#faf5ff;border-left:5px solid #7b1fa2;color:#4a1570;padding:12px 20px;border-radius:0 6px 6px 0;font-style:italic;line-height:1.6;",
+  note: "display:block;width:100%;max-width:800px;margin:14px auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;background-color:#fffbeb;border-top:4px solid #f59e0b;border-left:4px solid #f59e0b;color:#78350f;padding:12px 20px;border-radius:0 6px 6px 6px;font-weight:700;line-height:1.6;",
+  info: "display:block;width:100%;max-width:800px;margin:14px auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;background-color:#eff6ff;border-left:5px solid #1d4ed8;color:#1e3a8a;padding:12px 20px;border-radius:0 6px 6px 0;font-weight:600;line-height:1.6;",
+  tip:  "display:block;width:100%;max-width:800px;margin:14px auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;background-color:#f0fdfa;border-left:5px solid #0d9488;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-weight:600;line-height:1.6;",
+  step: "display:block;width:100%;max-width:800px;margin:14px auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;background-color:#eef2ff;border-left:5px solid #4338ca;color:#1e1b4b;padding:12px 20px;border-radius:0 6px 6px 0;font-weight:700;line-height:1.6;",
+  quote:"display:block;width:100%;max-width:800px;margin:14px auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;background-color:#f8fafc;border-left:5px solid #94a3b8;color:#334155;padding:12px 22px;border-radius:0 6px 6px 0;font-style:italic;line-height:1.7;",
+  extra:"display:block;width:100%;max-width:800px;margin:14px auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;background-color:#f9fafb;border:1px solid #d1d5db;border-left:4px solid #6b7280;color:#374151;padding:10px 18px;border-radius:0 6px 6px 6px;font-weight:600;line-height:1.6;",
+  practice:"display:block;width:100%;max-width:800px;margin:14px auto;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;background-color:#f0fdfa;border:2px solid #0f766e;border-left:6px solid #0f766e;color:#134e4a;padding:12px 20px;border-radius:0 6px 6px 0;font-weight:700;line-height:1.6;",
   defterm:"display:block;background-color:#eeeeee;color:#263238;padding:10px 14px;border-radius:6px 6px 0 0;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:bold;line-height:1.4;",
   defbody:"display:block;padding:12px 14px;border:1px solid #e0e0e0;border-top:none;border-radius:0 0 6px 6px;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.7;color:#2d2d2d;",
   body:   "display:inline-block;padding:6px 10px;color:#2d2d2d;font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;",
@@ -60,9 +60,10 @@ function isWordList(el) {
 // ══════════════════════════════════════════════════════════════
 //  ANCHO INSTITUCIONAL SOLO EN EXPORTACIÓN MOODLE
 // ══════════════════════════════════════════════════════════════
-const EXPORT_CONTENT_MAX = "850px";
-const EXPORT_TEXT_MAX    = "76ch";
-const EXPORT_TEXT_STYLE  = "font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.8;color:#2d2d2d;margin:14px auto;max-width:" + EXPORT_TEXT_MAX + ";width:100%;box-sizing:border-box;";
+const EXPORT_CONTENT_MAX = "800px";
+const EXPORT_MEDIA_MAX   = "1000px";
+const EXPORT_TEXT_MAX    = "800px";
+const EXPORT_TEXT_STYLE  = "font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.8;color:#2d2d2d;margin:14px auto;max-width:" + EXPORT_TEXT_MAX + ";width:100%;box-sizing:border-box;";
 const EXPORT_UL_STYLE    = EXPORT_TEXT_STYLE + "padding-left:28px;";
 function setExportBox(el, maxWidth, topBottom) {
   if (!el || !el.style) return;
@@ -75,24 +76,57 @@ function setExportBox(el, maxWidth, topBottom) {
   el.style.boxSizing = 'border-box';
 }
 function applyOptimizedReadingWidthForExport(clone) {
-  clone.querySelectorAll('p').forEach(el => { if (!el.closest('td,th')) el.setAttribute('style', EXPORT_TEXT_STYLE); });
+  // Criterio único:
+  // - Texto, títulos, listas y bloques institucionales: 800px.
+  // - Recursos visuales: imágenes, vídeos, PDF, presentaciones, audio y tablas: 1000px.
+  clone.querySelectorAll('p').forEach(el => {
+    if (el.closest('td,th')) return;
+    if (el.querySelector('img,iframe,video,audio,table,div,section,article,figure,blockquote,ul,ol,hr')) return;
+    el.setAttribute('style', EXPORT_TEXT_STYLE);
+  });
   clone.querySelectorAll('ul').forEach(el => { if (!el.closest('td,th')) el.setAttribute('style', EXPORT_UL_STYLE); });
   clone.querySelectorAll('ol').forEach(el => { if (!el.closest('td,th')) el.setAttribute('style', EXPORT_UL_STYLE); });
+  clone.querySelectorAll('img,iframe,video,audio,table').forEach(el => {
+    if (!el || !el.style || el.closest('td,th')) return;
+    el.style.maxWidth = '100%';
+    el.style.boxSizing = 'border-box';
+  });
   Array.from(clone.children).forEach(el => {
     if (!el || el.nodeType !== 1) return;
     const tag = el.tagName.toLowerCase();
-    if (tag === 'table') { setExportBox(el, EXPORT_CONTENT_MAX, '24px'); return; }
-    if (tag === 'div' && el.querySelector('table')) { if (!el.style.overflowX) el.style.overflowX = 'auto'; setExportBox(el, EXPORT_CONTENT_MAX, '24px'); return; }
-    if (tag === 'div' && el.querySelector('iframe,video,audio,img')) { setExportBox(el, EXPORT_CONTENT_MAX, '24px'); return; }
+    const hasMedia = !!(el.querySelector && el.querySelector('img,iframe,video,audio,table'));
+    if (tag === 'table') { setExportBox(el, EXPORT_MEDIA_MAX, '24px'); return; }
+    if ((tag === 'div' || tag === 'p') && el.querySelector('table')) {
+      if (!el.style.overflowX) el.style.overflowX = 'auto';
+      setExportBox(el, EXPORT_MEDIA_MAX, '24px');
+      return;
+    }
+    if ((tag === 'div' || tag === 'p') && hasMedia) { setExportBox(el, EXPORT_MEDIA_MAX, '24px'); return; }
+    if (tag === 'ul' || tag === 'ol') { setExportBox(el, EXPORT_CONTENT_MAX, '18px'); return; }
+    if (tag === 'hr') { setExportBox(el, EXPORT_CONTENT_MAX, '20px'); return; }
     if (tag === 'div') {
       const first = el.firstElementChild;
       const style = el.getAttribute('style') || '';
       const firstStyle = first ? (first.getAttribute('style') || '') : '';
-      const isTextualBlock = style.includes('margin:') || firstStyle.includes('display:inline-block') || el.classList.contains('sequence-block');
+      const isTextualBlock = style.includes('margin:') || firstStyle.includes('display:inline-block') || firstStyle.includes('display:block') || el.classList.contains('sequence-block');
       if (isTextualBlock) setExportBox(el, EXPORT_CONTENT_MAX, '24px');
     }
   });
   clone.querySelectorAll('.sequence-block').forEach(el => setExportBox(el, EXPORT_CONTENT_MAX, '24px'));
+  // Bloques especiales por color: mantienen 800px aunque estén dentro de un contenedor mayor.
+  const markers = ['#2e7d32','#7b1fa2','#f59e0b','#1d4ed8','#0d9488','#4338ca','#0f766e','#94a3b8','#6b7280'];
+  clone.querySelectorAll('div').forEach(el => {
+    const s = (el.getAttribute('style') || '').toLowerCase();
+    if (!markers.some(m => s.includes(m))) return;
+    if (el.closest('td,th')) return;
+    el.style.display = 'block';
+    el.style.width = '100%';
+    el.style.maxWidth = EXPORT_CONTENT_MAX;
+    el.style.marginLeft = 'auto';
+    el.style.marginRight = 'auto';
+    el.style.boxSizing = 'border-box';
+    el.style.overflowWrap = 'anywhere';
+  });
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -820,7 +854,7 @@ function confirmTable() {
   const rows = Math.max(1, Math.min(30, parseInt(document.getElementById('tableRows').value)||3));
   const head = document.getElementById('tableHeader').checked;
   closeTableModal();
-  let t = '<div style="overflow-x:auto;margin:12px 0;"><table style="' + EX.table + '">';
+  let t = '<div class="moodle-media-block" style="overflow-x:auto;margin:12px auto;width:100%;max-width:' + EXPORT_MEDIA_MAX + ';box-sizing:border-box;"><table style="' + EX.table + '">';
   if (head) {
     t += '<tr>';
     for (let i=0;i<cols;i++) t += '<th style="' + EX.th + '">Columna '+(i+1)+'</th>';
@@ -1116,20 +1150,20 @@ function compressAndInsertImage(file, width, caption) {
 // ══════════════════════════════════════════════════════════════
 function buildImageHTML(src, caption, width) {
   const isAuto = !width || width === 'auto';
-  const containerW = isAuto ? 'max-width:100%;' : 'width:' + width + ';';
+  const containerW = isAuto ? 'max-width:100%;' : 'width:' + width + ';max-width:100%;';
   const imgStyle   = isAuto
-    ? 'max-width:100%;width:auto;height:auto;border-radius:6px;display:block;margin:0 auto;'
-    : 'width:100%;height:auto;border-radius:6px;display:block;';
-  return '<div style="text-align:center;margin:20px 0;">' +
+    ? 'max-width:100%;width:auto;height:auto;border-radius:6px;display:block;margin:0 auto;box-sizing:border-box;'
+    : 'width:100%;max-width:100%;height:auto;border-radius:6px;display:block;box-sizing:border-box;';
+  return '<div class="moodle-media-block" style="text-align:center;margin:20px auto;width:100%;max-width:' + EXPORT_MEDIA_MAX + ';box-sizing:border-box;">' +
          '<div style="display:inline-block;' + containerW + 'background:#fff;' +
          'border:1px solid #d1d1d1;border-radius:10px;overflow:hidden;' +
-         'box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">' +
-         '<div style="text-align:center;background:#f0f0f0;padding:16px;">' +
+         'box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;box-sizing:border-box;">' +
+         '<div style="text-align:center;background:#f0f0f0;padding:16px;box-sizing:border-box;">' +
          '<img src="' + src + '" alt="' + esc(caption || 'Imagen') + '" ' +
          'style="' + imgStyle + '">' +
          '</div>' +
-         '<div style="padding:12px 16px;background:#f9f9f9;border-top:1px solid #d1d1d1;text-align:center;">' +
-         '<span contenteditable="true" style="font-weight:700;color:#333;font-size:1em;display:block;outline:none;cursor:text;" ' +
+         '<div style="padding:12px 16px;background:#f9f9f9;border-top:1px solid #d1d1d1;text-align:center;box-sizing:border-box;">' +
+         '<span contenteditable="true" style="font-weight:700;color:#333;font-size:16px;line-height:1.5;display:block;outline:none;cursor:text;overflow-wrap:anywhere;" ' +
          'title="Haz clic para editar el título">🖼️ ' + (caption ? esc(caption) : 'Haz clic para escribir el título') + '</span>' +
          '</div>' +
          '</div>' +
@@ -1137,15 +1171,15 @@ function buildImageHTML(src, caption, width) {
 }
 
 function buildPPTHTML(embedUrl, caption, height) {
-  return '<div style="width:100%;margin:20px auto;background:#fff;border:1px solid #d1d1d1;'
-       + 'border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">'
-       + '<div style="position:relative;width:100%;height:' + height + ';background:#f5f5f5;">'
+  return '<div class="moodle-media-block" style="width:100%;max-width:' + EXPORT_MEDIA_MAX + ';margin:20px auto;background:#fff;border:1px solid #d1d1d1;'
+       + 'border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;box-sizing:border-box;">'
+       + '<div style="position:relative;width:100%;height:' + height + ';background:#f5f5f5;box-sizing:border-box;">'
        + '<iframe src="' + embedUrl + '" '
-       + 'style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" '
+       + 'style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;max-width:100%;box-sizing:border-box;" '
        + 'allowfullscreen></iframe>'
        + '</div>'
-       + '<div style="padding:10px 16px;background:#f9f9f9;border-top:1px solid #d1d1d1;text-align:center;">'
-       + '<span contenteditable="true" style="font-weight:700;color:#333;font-size:1em;display:block;outline:none;cursor:text;" '
+       + '<div style="padding:10px 16px;background:#f9f9f9;border-top:1px solid #d1d1d1;text-align:center;box-sizing:border-box;">'
+       + '<span contenteditable="true" style="font-weight:700;color:#333;font-size:16px;line-height:1.5;display:block;outline:none;cursor:text;overflow-wrap:anywhere;" '
        + 'title="Haz clic para editar el título">📊 ' + (caption ? esc(caption) : 'Haz clic para escribir el título') + '</span>'
        + '</div>'
        + '</div>';
@@ -1217,7 +1251,7 @@ function confirmMedia() {
     const ytShorts = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
     if (ytMatch)  embedUrl = 'https://www.youtube.com/embed/' + ytMatch[1];
     if (ytShorts) embedUrl = 'https://www.youtube.com/embed/' + ytShorts[1];
-    html = '<div style="width:100%;margin:20px auto;background:#fff;border:1px solid #d1d1d1;' +
+    html = '<div class="moodle-media-block" style="width:100%;max-width:' + EXPORT_MEDIA_MAX + ';margin:20px auto;background:#fff;border:1px solid #d1d1d1;box-sizing:border-box;' +
            'border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">' +
            '<div style="position:relative;width:100%;padding-bottom:56.25%;background:#000;">' +
            '<iframe src="' + embedUrl + '" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>' +
@@ -1234,7 +1268,7 @@ function confirmMedia() {
     const protect   = document.getElementById('pdfProtect');
     const doProtect = protect ? protect.checked : false;
     const params = doProtect ? '#toolbar=0&navpanes=0&scrollbar=1' : '#scrollbar=1';
-    html = '<div style="width:100%;margin:20px auto;border-radius:10px;' +
+    html = '<div class="moodle-media-block" style="width:100%;max-width:' + EXPORT_MEDIA_MAX + ';margin:20px auto;border-radius:10px;box-sizing:border-box;' +
            'overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">' +
            '<iframe src="' + url + params + '" ' +
            'style="width:100%;height:' + height + ';border:0;display:block;min-height:300px;">' +
@@ -1262,7 +1296,7 @@ const ESCUDO_B64 = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEB
 function onBannerToggle() {
   const on = document.getElementById('toggle-banner').checked;
   document.getElementById('banner-toggle-label').textContent =
-    on ? '📄 Documento completo' : '🧩 Solo bloque';
+    on ? 'Documento completo' : 'Solo bloque';
 }
 
 function onAreaChange() {
@@ -1284,7 +1318,7 @@ function buildBanner(position) {
       + '<div style="font-size:10px;font-weight:600;color:#374151;margin-top:4px;line-height:1.25;text-transform:uppercase;">' + esc(name) + '</div>'
       + '</div>'
     : '<div style="flex:1 1 0;min-width:0;">&nbsp;</div>';
-  return '<div style="font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:850px;width:100%;box-sizing:border-box;margin-left:auto;margin-right:auto;' + marginTop + marginBottom
+  return '<div style="font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:800px;width:100%;box-sizing:border-box;margin-left:auto;margin-right:auto;' + marginTop + marginBottom
     + 'border:2px solid #c0272d;border-radius:8px;background:#f9f9f9;padding:10px 12px;overflow:hidden;">'
     + '<div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:10px;width:100%;box-sizing:border-box;">'
     + '<div style="flex:1 1 0;min-width:0;display:flex;align-items:center;gap:8px;text-align:left;box-sizing:border-box;word-break:break-word;overflow-wrap:anywhere;">'
@@ -1338,13 +1372,109 @@ function getBlockLabel(el) {
   return null;
 }
 
+
+// ══════════════════════════════════════════════════════════════
+//  LIMPIEZA FINAL DE EXPORTACIÓN MOODLE
+// ══════════════════════════════════════════════════════════════
+const EXPORT_BLOCK_CHILD_SELECTOR = 'div,section,article,main,header,footer,aside,nav,figure,blockquote,table,ul,ol,hr,iframe,video,audio';
+const EXPORT_MEDIA_SELECTOR = 'img,iframe,video,audio,table';
+function isMeaningfulTextNode(node) {
+  return node && node.nodeType === 3 && node.textContent.replace(/\u00a0/g, ' ').trim() !== '';
+}
+function nodeNeedsOwnExportBlock(node) {
+  if (!node || node.nodeType !== 1) return false;
+  if (node.matches(EXPORT_BLOCK_CHILD_SELECTOR)) return true;
+  if (node.matches(EXPORT_MEDIA_SELECTOR)) return true;
+  return !!(node.querySelector && node.querySelector(EXPORT_MEDIA_SELECTOR));
+}
+function normalizeInvalidParagraphBlocks(root) {
+  // Evita HTML frágil en Moodle: un <p> no debe envolver divs, tablas ni iframes.
+  // Si un párrafo contiene bloques/recursos, se divide en párrafos de texto y bloques independientes.
+  Array.from(root.querySelectorAll('p')).forEach(p => {
+    if (!p || p.closest('td,th')) return;
+    const children = Array.from(p.childNodes);
+    if (!children.some(nodeNeedsOwnExportBlock)) return;
+    const frag = document.createDocumentFragment();
+    let inlineP = null;
+    function ensureInlineP() {
+      if (!inlineP) {
+        inlineP = document.createElement('p');
+        inlineP.setAttribute('style', EXPORT_TEXT_STYLE);
+      }
+      return inlineP;
+    }
+    function flushInlineP() {
+      if (!inlineP) return;
+      const txt = inlineP.textContent.replace(/\u00a0/g, ' ').trim();
+      if (txt || inlineP.querySelector('img,span,strong,em,u,a,br')) frag.appendChild(inlineP);
+      inlineP = null;
+    }
+    children.forEach(node => {
+      if (nodeNeedsOwnExportBlock(node)) {
+        flushInlineP();
+        frag.appendChild(node);
+      } else if (isMeaningfulTextNode(node) || node.nodeType === 1) {
+        ensureInlineP().appendChild(node);
+      }
+    });
+    flushInlineP();
+    if (frag.childNodes.length) p.parentNode.insertBefore(frag, p);
+    p.remove();
+  });
+}
+function removeDefaultResourcePlaceholders(root) {
+  const defaults = new Set([
+    '🖼️ Haz clic para escribir el título',
+    '🎬 Haz clic para escribir el título',
+    '📊 Haz clic para escribir el título',
+    'Haz clic para escribir el título'
+  ]);
+  Array.from(root.querySelectorAll('span')).forEach(span => {
+    const text = span.textContent.replace(/\s+/g, ' ').trim();
+    if (!defaults.has(text)) return;
+    const captionRow = span.closest('div');
+    if (captionRow && captionRow.parentElement && !captionRow.querySelector('img,iframe,video,audio,table')) {
+      captionRow.remove();
+    } else {
+      span.remove();
+    }
+  });
+}
+function neutralizeBrokenInternalLinks(root) {
+  const targets = new Set();
+  root.querySelectorAll('[id]').forEach(el => { if (el.id) targets.add(el.id); });
+  root.querySelectorAll('a[name]').forEach(el => { if (el.getAttribute('name')) targets.add(el.getAttribute('name')); });
+  Array.from(root.querySelectorAll('a[href^="#"]')).forEach(a => {
+    const href = a.getAttribute('href') || '';
+    const id = decodeURIComponent(href.slice(1));
+    if (!id || targets.has(id)) return;
+    const frag = document.createDocumentFragment();
+    while (a.firstChild) frag.appendChild(a.firstChild);
+    a.parentNode.replaceChild(frag, a);
+  });
+}
+function cleanPreviewOnlyClasses(root) {
+  root.querySelectorAll('.moodle-content-block, .moodle-media-block-preview').forEach(el => {
+    el.classList.remove('moodle-content-block', 'moodle-media-block-preview');
+    if (!el.getAttribute('class')) el.removeAttribute('class');
+  });
+}
+function cleanExportAttributes(root) {
+  root.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  root.querySelectorAll('[bis_skin_checked]').forEach(el => el.removeAttribute('bis_skin_checked'));
+  root.querySelectorAll('[data-placeholder]').forEach(el => el.removeAttribute('data-placeholder'));
+  root.querySelectorAll('[spellcheck]').forEach(el => el.removeAttribute('spellcheck'));
+}
 // ══════════════════════════════════════════════════════════════
 //  CONSTRUIR HTML FINAL
 // ══════════════════════════════════════════════════════════════
 function buildFinalHTML() {
   const clone = editor.cloneNode(true);
-  clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
-  clone.querySelectorAll('[bis_skin_checked]').forEach(el => el.removeAttribute('bis_skin_checked'));
+  cleanExportAttributes(clone);
+  normalizeInvalidParagraphBlocks(clone);
+  removeDefaultResourcePlaceholders(clone);
+  neutralizeBrokenInternalLinks(clone);
+  cleanPreviewOnlyClasses(clone);
   applyOptimizedReadingWidthForExport(clone);
   let blockIndex = 0;
   Array.from(clone.childNodes).forEach(node => {
@@ -1357,12 +1487,13 @@ function buildFinalHTML() {
   });
   let html = clone.innerHTML || '';
   html = html.replace(/ style="outline: none; cursor: text;"/gi, '');
+  html = html.replace(/\sclass=""/gi, '');
   html = html.replace(/<p><br><\/p>/gi, '<p>&nbsp;</p>');
   const PLACEHOLDER = '\x00BR\x00';
   html = html.replace(/(<t[dh][^>]*>[\s\S]*?<\/t[dh]>)/gi, match =>
-    match.replace(/<br\s*\/?>/gi, PLACEHOLDER)
+    match.replace(/<br\s*\/?\>/gi, PLACEHOLDER)
   );
-  html = html.replace(/<br\s*\/?>/gi, '');
+  html = html.replace(/<br\s*\/?\>/gi, '');
   html = html.replace(/\x00BR\x00/g, '<br>');
   html = html.trim();
   if (html && html !== '<p>&nbsp;</p>') {
@@ -1583,7 +1714,7 @@ const HELP_CONTENT = {
 </div>
 
 <div class="help-tip">
-💡 <strong>Salir del bloque:</strong> Pulsa <kbd>Mayús</kbd> + <kbd>Enter</kbd> para finalizar el bloque y crear un párrafo nuevo debajo.
+💡 <strong>Saltos dentro de bloques:</strong> Pulsa <kbd>Enter</kbd> para crear una nueva línea dentro del mismo bloque. Para crear otro bloque o párrafo, usa los botones del panel.
 </div>
 
 <div class="help-tip">
@@ -1725,8 +1856,8 @@ const HELP_CONTENT = {
         <li><kbd>Ctrl+Z</kbd> — deshacer</li>
         <li><kbd>Ctrl+B</kbd> — negrita</li>
         <li><kbd>Ctrl+I</kbd> — cursiva</li>
-        <li><kbd>Enter</kbd> al final de un bloque especial — crea párrafo nuevo después</li>
-        <li><kbd>Enter</kbd> al inicio de un bloque especial — inserta párrafo vacío antes</li>
+        <li><kbd>Enter</kbd> dentro de cualquier bloque editable — añade una línea dentro del mismo bloque</li>
+        <li>Para crear otro bloque o párrafo independiente, coloca el cursor fuera del bloque o usa los botones del panel</li>
         <li><kbd>Enter</kbd> dentro de una celda de tabla — salto de línea sin salir de la celda</li>
       </ul>
       <p>Atajos en Word para aplicar estilos de título:</p>
@@ -1837,6 +1968,30 @@ const tableObserver = new MutationObserver(mutations => {
 });
 tableObserver.observe(editor, { childList: true, subtree: true });
 
+
+// ══════════════════════════════════════════════════════════════
+//  PREVISUALIZACIÓN FIEL A EXPORTACIÓN MOODLE
+//  Texto/bloques: 800px · Recursos: 1000px
+// ══════════════════════════════════════════════════════════════
+function syncPreviewExportClasses() {
+  if (!editor) return;
+  Array.from(editor.children).forEach(el => {
+    if (!el || el.nodeType !== 1) return;
+    el.classList.remove('moodle-content-block', 'moodle-media-block-preview');
+    const tag = el.tagName ? el.tagName.toLowerCase() : '';
+    const hasMedia = !!(el.querySelector && el.querySelector('img,iframe,video,audio,table'));
+    if (tag === 'table' || hasMedia || el.classList.contains('moodle-media-block')) {
+      el.classList.add('moodle-media-block-preview');
+    } else {
+      el.classList.add('moodle-content-block');
+    }
+  });
+}
+const previewExportObserver = new MutationObserver(() => syncPreviewExportClasses());
+previewExportObserver.observe(editor, { childList:true, subtree:false });
+editor.addEventListener('input', syncPreviewExportClasses);
+setTimeout(syncPreviewExportClasses, 0);
+
 // ══════════════════════════════════════════════════════════════
 //  INPUT FILE
 // ══════════════════════════════════════════════════════════════
@@ -1936,3 +2091,270 @@ function closeManiobrasModal() {
 document.getElementById('maniobrasModal').addEventListener('click', e => {
   if (e.target.id === 'maniobrasModal') closeManiobrasModal();
 });
+
+// LAYOUT SPLIT v6.3 aplicado por CSS: herramientas a la izquierda y previsualización a la derecha.
+
+
+/* ============================================================
+   PARCHE v6.3.1 · CONSERVAR SALTOS DE LÍNEA EN EXPORTACIÓN
+   Coloca este bloque AL FINAL de app.js, o carga este archivo después de app.js.
+   Motivo: la versión anterior eliminaba todos los <br> fuera de tablas.
+   ============================================================ */
+(function(){
+  if (typeof buildFinalHTML !== 'function') {
+    console.warn('Parche saltos de línea: no se encontró buildFinalHTML.');
+    return;
+  }
+
+  function fallbackCleanExportAttributes(root) {
+    root.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    root.querySelectorAll('[bis_skin_checked]').forEach(el => el.removeAttribute('bis_skin_checked'));
+    root.querySelectorAll('[data-placeholder]').forEach(el => el.removeAttribute('data-placeholder'));
+    root.querySelectorAll('[spellcheck]').forEach(el => el.removeAttribute('spellcheck'));
+  }
+
+  // Reemplaza buildFinalHTML conservando los <br> introducidos por el usuario.
+  buildFinalHTML = function() {
+    const clone = editor.cloneNode(true);
+
+    if (typeof cleanExportAttributes === 'function') cleanExportAttributes(clone);
+    else fallbackCleanExportAttributes(clone);
+
+    if (typeof normalizeInvalidParagraphBlocks === 'function') normalizeInvalidParagraphBlocks(clone);
+    if (typeof removeDefaultResourcePlaceholders === 'function') removeDefaultResourcePlaceholders(clone);
+    if (typeof neutralizeBrokenInternalLinks === 'function') neutralizeBrokenInternalLinks(clone);
+    if (typeof cleanPreviewOnlyClasses === 'function') cleanPreviewOnlyClasses(clone);
+    if (typeof applyOptimizedReadingWidthForExport === 'function') applyOptimizedReadingWidthForExport(clone);
+
+    let blockIndex = 0;
+    Array.from(clone.childNodes).forEach(node => {
+      const label = typeof getBlockLabel === 'function' ? getBlockLabel(node) : null;
+      if (label) {
+        blockIndex++;
+        const comment = document.createComment(` BLOQUE ${blockIndex}: ${label} `);
+        clone.insertBefore(comment, node);
+      }
+    });
+
+    let html = clone.innerHTML || '';
+    html = html.replace(/ style="outline: none; cursor: text;"/gi, '');
+    html = html.replace(/\sclass=""/gi, '');
+
+    // Mantener los párrafos vacíos como separadores legibles en Moodle.
+    html = html.replace(/<p><br\s*\/?><\/p>/gi, '<p>&nbsp;</p>');
+
+    // CORRECCIÓN PRINCIPAL:
+    // Antes se eliminaban todos los <br> fuera de celdas de tabla.
+    // Ahora se normalizan y se conservan para respetar los saltos de línea
+    // escritos dentro de bloques como Aviso, Objetivo, Consejo, Paso, etc.
+    html = html.replace(/<br\s*\/?\>/gi, '<br>');
+
+    html = html.trim();
+
+    if (html && html !== '<p>&nbsp;</p>') {
+      const includeBanner = document.getElementById('toggle-banner')?.checked !== false;
+      if (includeBanner && typeof buildBanner === 'function') {
+        html = buildBanner('header') + '\n' + html + '\n' + buildBanner('footer');
+      }
+    }
+    return html;
+  };
+
+  // Fuerza refresco del estado del botón Copiar si ya hay contenido.
+  if (typeof refreshOutput === 'function') refreshOutput();
+})();
+
+// PANEL BLOQUES VISIBLES v6.4: reconfiguración visual del panel izquierdo sin cambios funcionales.
+
+// PANEL IZQUIERDO AMIGABLE v6.5: mejora visual de botones y legibilidad sin cambios funcionales.
+// PANEL IZQUIERDO SCROLL GENERAL v6.6: scroll vertical único para todo el panel izquierdo; sin cambios funcionales.
+
+/* ============================================================
+   PARCHE v6.7 · INTRO COHERENTE EN TODOS LOS BLOQUES EDITABLES
+   Comportamiento único: Enter dentro de cualquier bloque editable
+   inserta un salto de línea dentro del MISMO bloque, sin dividirlo
+   ni crear una nueva tarjeta/bloque visual. Se dejan las listas con
+   comportamiento nativo para crear nuevos <li>.
+   ============================================================ */
+(function(){
+  if (!window.editor) return;
+
+  function isInsideEditor(node) {
+    return !!(node && (node === editor || editor.contains(node)));
+  }
+
+  function closestElement(node) {
+    if (!node) return null;
+    return node.nodeType === 1 ? node : node.parentElement;
+  }
+
+  function getEditableHostInsideEditor(node) {
+    const el = closestElement(node);
+    if (!el || !isInsideEditor(el)) return null;
+    const host = el.closest('[contenteditable="true"]');
+    if (!host || host === editor || !isInsideEditor(host)) return null;
+    return host;
+  }
+
+  function isManagedEditableBlock(host) {
+    if (!host || host === editor) return false;
+    if (host.closest('li')) return false; // Las listas mantienen Enter nativo para nuevos elementos.
+    if (host.closest('td,th')) return true;
+    const style = (host.getAttribute('style') || '').toLowerCase();
+    const parentStyle = (host.parentElement && host.parentElement.getAttribute('style') || '').toLowerCase();
+    const blockMarkers = [
+      '#c0272d','#8e1b1f','#fff0f0','#e8b4b5',
+      '#2e7d32','#7b1fa2','#f59e0b','#1d4ed8','#0d9488',
+      '#4338ca','#0f766e','#94a3b8','#6b7280','#eeeeee'
+    ];
+    return host.hasAttribute('contenteditable') && (
+      style.includes('display:inline-block') ||
+      style.includes('display:block') ||
+      style.includes('border-left') ||
+      style.includes('background') ||
+      parentStyle.includes('margin:') ||
+      blockMarkers.some(m => style.includes(m) || parentStyle.includes(m))
+    );
+  }
+
+  function insertLineBreakAtSelection() {
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return false;
+    const range = sel.getRangeAt(0);
+    range.deleteContents();
+
+    const br = document.createElement('br');
+    range.insertNode(br);
+
+    // Si el salto se inserta al final del bloque, un segundo <br> garantiza
+    // que el cursor quede en una línea visible en Chrome/Edge.
+    const afterRange = document.createRange();
+    afterRange.setStartAfter(br);
+    afterRange.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(afterRange);
+
+    const host = getEditableHostInsideEditor(br);
+    if (host) {
+      const test = document.createRange();
+      test.selectNodeContents(host);
+      test.setStartAfter(br);
+      const afterText = test.toString().replace(/\u00a0/g, ' ').trim();
+      const hasAfterElements = Array.from(host.childNodes).some(n => {
+        if (n === br) return false;
+        if (n.nodeType === 3) return n.textContent.replace(/\u00a0/g, ' ').trim() !== '' && (n.compareDocumentPosition(br) & Node.DOCUMENT_POSITION_PRECEDING);
+        return (n.compareDocumentPosition(br) & Node.DOCUMENT_POSITION_PRECEDING);
+      });
+      if (!afterText && !hasAfterElements) {
+        const br2 = document.createElement('br');
+        br.parentNode.insertBefore(br2, br.nextSibling);
+        const r = document.createRange();
+        r.setStartAfter(br);
+        r.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r);
+      }
+    }
+    return true;
+  }
+
+  editor.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter') return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return;
+    const host = getEditableHostInsideEditor(sel.getRangeAt(0).startContainer);
+    if (!isManagedEditableBlock(host)) return;
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (typeof saveBlockUndo === 'function') saveBlockUndo();
+    insertLineBreakAtSelection();
+    if (typeof captureEditorCursor === 'function') captureEditorCursor();
+    editor.dispatchEvent(new Event('input', { bubbles:true }));
+    if (typeof refreshOutput === 'function') refreshOutput();
+  }, true);
+
+  // Limpieza preventiva: si el navegador o un pegado genera divs/p internos
+  // dentro de un bloque editable, los convertimos a saltos <br> para mantener
+  // el bloque como una sola unidad visual.
+  function normalizeNestedBlocksInsideEditable(host) {
+    if (!isManagedEditableBlock(host) || host.closest('td,th,li')) return;
+    const nested = Array.from(host.querySelectorAll(':scope > div, :scope > p'));
+    if (!nested.length) return;
+    nested.forEach((node, idx) => {
+      const frag = document.createDocumentFragment();
+      if (idx > 0) frag.appendChild(document.createElement('br'));
+      while (node.firstChild) frag.appendChild(node.firstChild);
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+
+  editor.addEventListener('input', function(e) {
+    const host = getEditableHostInsideEditor(e.target);
+    if (host) normalizeNestedBlocksInsideEditable(host);
+  }, true);
+})();
+
+// v6.7: Intro uniforme dentro de bloques editables.
+
+
+/* ============================================================
+   PARCHE v6.8 · TABLAS MOODLE SIN BORDES NEGROS
+   - El generador de maniobras ya no usa tablas reales para pasos/riesgos.
+   - Si queda alguna tabla antigua o importada, se fuerza borde suave inline.
+   ============================================================ */
+(function(){
+  if (typeof buildFinalHTML !== 'function') return;
+  const __buildFinalHTML_v68 = buildFinalHTML;
+  function softenTablesInHtml(html) {
+    if (!html || html.indexOf('<table') === -1) return html;
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    tmp.querySelectorAll('table').forEach(table => {
+      table.style.borderCollapse = 'separate';
+      table.style.borderSpacing = '0';
+      table.style.border = '1px solid #edf0f4';
+      table.style.borderRadius = '12px';
+      table.style.overflow = 'hidden';
+      table.style.background = '#ffffff';
+      table.style.boxSizing = 'border-box';
+      table.style.width = table.style.width || '100%';
+    });
+    tmp.querySelectorAll('th').forEach(th => {
+      th.style.backgroundColor = th.style.backgroundColor || '#fff7f7';
+      th.style.color = th.style.color || '#9b1e23';
+      th.style.borderTop = 'none';
+      th.style.borderLeft = 'none';
+      th.style.borderRight = '1px solid #edf0f4';
+      th.style.borderBottom = '1px solid #edf0f4';
+      th.style.fontWeight = th.style.fontWeight || '800';
+      th.style.boxSizing = 'border-box';
+    });
+    tmp.querySelectorAll('td').forEach(td => {
+      td.style.borderTop = 'none';
+      td.style.borderLeft = 'none';
+      td.style.borderRight = '1px solid #edf0f4';
+      td.style.borderBottom = '1px solid #edf0f4';
+      td.style.boxSizing = 'border-box';
+    });
+    tmp.querySelectorAll('tr').forEach(tr => {
+      const cells = Array.from(tr.children).filter(el => /^(TD|TH)$/.test(el.tagName));
+      if (cells.length) cells[cells.length - 1].style.borderRight = 'none';
+    });
+    tmp.querySelectorAll('table').forEach(table => {
+      const rows = Array.from(table.querySelectorAll('tr'));
+      if (!rows.length) return;
+      Array.from(rows[rows.length - 1].children).forEach(cell => {
+        if (/^(TD|TH)$/.test(cell.tagName)) cell.style.borderBottom = 'none';
+      });
+    });
+    return tmp.innerHTML;
+  }
+  buildFinalHTML = function() {
+    return softenTablesInHtml(__buildFinalHTML_v68());
+  };
+  if (typeof refreshOutput === 'function') refreshOutput();
+})();
