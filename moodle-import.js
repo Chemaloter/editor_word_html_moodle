@@ -319,14 +319,150 @@
   }
 
   function normalizeImportedMedia(root) {
-    root.querySelectorAll('img,iframe,video,audio').forEach(function (media) {
-      media.style.maxWidth = '100%';
-      media.style.boxSizing = 'border-box';
+    function cssText(el) {
+      return String((el && el.getAttribute && el.getAttribute('style')) || '')
+        .toLowerCase()
+        .replace(/\s+/g, '');
+    }
 
-      if (media.tagName.toLowerCase() === 'img' && !media.getAttribute('alt')) {
-        media.setAttribute('alt', 'Imagen');
+    function isPanel(el) {
+      if (!el || el.nodeType !== 1 || el.tagName !== 'DIV') return false;
+      const s = cssText(el);
+      return el.querySelector('img') && (
+        s.includes('background:#f0f0f0') ||
+        s.includes('background-color:#f0f0f0') ||
+        s.includes('padding:16px') ||
+        s.includes('text-align:center')
+      );
+    }
+
+    function isCard(el) {
+      if (!el || el.nodeType !== 1 || el.tagName !== 'DIV') return false;
+      const s = cssText(el);
+      return el.querySelector('img') &&
+        s.includes('display:inline-block') &&
+        (s.includes('border:1pxsolid#d1d1d1') || s.includes('box-shadow'));
+    }
+
+    function isOuter(el) {
+      if (!el || el.nodeType !== 1 || el.tagName !== 'DIV') return false;
+      const s = cssText(el);
+      return el.querySelector('img') &&
+        (s.includes('max-width:1000px') || s.includes('margin:24pxauto') || s.includes('text-align:center'));
+    }
+
+    function readWidth(el) {
+      const raw = String((el && el.getAttribute && el.getAttribute('style')) || '');
+      const m = raw.match(/width\s*:\s*(100%|75%|50%|auto|[0-9.]+%)/i);
+      return m ? m[1] : '100%';
+    }
+
+    function styleImportedImage(img, widthMode) {
+      if (!img.getAttribute('alt')) img.setAttribute('alt', 'Imagen');
+      img.style.maxWidth = '100%';
+      img.style.height = 'auto';
+      img.style.borderRadius = img.style.borderRadius || '6px';
+      img.style.display = 'block';
+      img.style.marginLeft = 'auto';
+      img.style.marginRight = 'auto';
+      img.style.boxSizing = 'border-box';
+      img.style.width = widthMode === 'auto' ? 'auto' : '100%';
+    }
+
+    function buildCanonicalImageBlock(img, width, captionNodes) {
+      const cleanImg = img.cloneNode(true);
+      styleImportedImage(cleanImg, width === 'auto' ? 'auto' : 'scaled');
+
+      const block = document.createElement('div');
+      block.className = 'moodle-media-block';
+      block.setAttribute('style', 'text-align:center;margin:20px auto;width:100%;max-width:1000px;box-sizing:border-box;border:none;background:transparent;box-shadow:none;border-radius:0;padding:0;overflow:visible;');
+
+      const frame = document.createElement('div');
+      frame.setAttribute('style', 'display:inline-block;width:' + width + ';max-width:100%;background:#fff;border:1px solid #d1d1d1;border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.12);font-family:Montserrat,Segoe UI,Roboto,Helvetica,Arial,sans-serif;box-sizing:border-box;');
+
+      const panel = document.createElement('div');
+      panel.setAttribute('style', 'text-align:center;background:#f0f0f0;padding:16px;box-sizing:border-box;');
+
+      panel.appendChild(cleanImg);
+      frame.appendChild(panel);
+
+      (captionNodes || []).forEach(function (n) {
+        const clone = n.cloneNode(true);
+        clone.querySelectorAll('[contenteditable]').forEach(function (el) { el.removeAttribute('contenteditable'); });
+        frame.appendChild(clone);
+      });
+
+      block.appendChild(frame);
+      return block;
+    }
+
+    function alreadyHasResizableFrame(img) {
+      const block = img.closest('.moodle-media-block');
+      if (!block) return false;
+      let node = img.parentElement;
+      while (node && node !== block) {
+        if (node.tagName === 'DIV' && cssText(node).includes('display:inline-block')) return true;
+        node = node.parentElement;
+      }
+      return false;
+    }
+
+    function canonicalizeLegacyEditorCard(img) {
+      if (!root.contains(img)) return false;
+
+      const block = img.closest('.moodle-media-block');
+      if (!block) return false;
+
+      const panel = block.parentElement;
+      const card = panel && panel.parentElement;
+      const outer = card && card.parentElement;
+
+      // Caso exacto detectado en el HTML de Moodle:
+      // outer 1000px > card inline-block > panel gris > moodle-media-block > img
+      if (isPanel(panel) && isCard(card) && isOuter(outer)) {
+        const width = readWidth(card);
+        const captions = Array.from(card.children).filter(function (child) {
+          return child !== panel && child.nodeType === 1 && !child.querySelector('img');
+        });
+        const canonical = buildCanonicalImageBlock(img, width, captions);
+        outer.replaceWith(canonical);
+        return true;
       }
 
+      return false;
+    }
+
+    function normalizePlainImage(img) {
+      if (!root.contains(img)) return;
+      if (canonicalizeLegacyEditorCard(img)) return;
+      if (alreadyHasResizableFrame(img)) {
+        styleImportedImage(img, 'scaled');
+        const block = img.closest('.moodle-media-block');
+        if (block) {
+          block.setAttribute('style', 'text-align:center;margin:20px auto;width:100%;max-width:1000px;box-sizing:border-box;border:none;background:transparent;box-shadow:none;border-radius:0;padding:0;overflow:visible;');
+        }
+        return;
+      }
+
+      let block = img.closest('.moodle-media-block');
+      if (!block) {
+        block = document.createElement('div');
+        block.className = 'moodle-media-block';
+        img.parentNode.insertBefore(block, img);
+        block.appendChild(img);
+      }
+
+      const canonical = buildCanonicalImageBlock(img, '100%', []);
+      block.replaceWith(canonical);
+    }
+
+    // Importante: trabajamos sobre una copia estática porque al reemplazar nodos
+    // cambia el árbol DOM durante el recorrido.
+    Array.from(root.querySelectorAll('img')).forEach(normalizePlainImage);
+
+    root.querySelectorAll('iframe,video,audio').forEach(function (media) {
+      media.style.maxWidth = '100%';
+      media.style.boxSizing = 'border-box';
       if (!media.closest('.moodle-media-block')) {
         const wrapper = document.createElement('div');
         wrapper.className = 'moodle-media-block';
