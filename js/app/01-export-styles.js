@@ -24,6 +24,14 @@
 //
 //  Nota: FIX 7 (deduplicación de wrappers multimedia) se conserva
 //  intacto y sigue funcionando igual que antes.
+//
+//  ──────────────────────────────────────────────────────────────
+//  ✅ v2.1 · EXCEPCIÓN SECCIONES MOODLE
+//     - Los bloques marcados con la clase .moodle-seccion-block
+//       (generados por el botón "Secciones / subsecciones Moodle")
+//       NO se centran, NO se limitan a 800px y se exportan tal cual,
+//       anclados a la izquierda con su propio style inline.
+//     - El resto del archivo permanece intacto.
 // ══════════════════════════════════════════════════════════════
 
 // ══════════════════════════════════════════════════════════════
@@ -95,6 +103,13 @@ function _mergeStyles(existing, defaults, forced) {
   return _serializeStyleMap(out);
 }
 
+// ✅ v2.1 · Detecta bloques "Secciones / subsecciones Moodle".
+// Estos bloques NO deben ser re-centrados ni limitados a 800/1000px
+// al exportar; se exportan tal cual los inserta el generador.
+function _isSeccionBlock(el) {
+  return !!(el && el.nodeType === 1 && el.classList && el.classList.contains('moodle-seccion-block'));
+}
+
 // ══════════════════════════════════════════════════════════════
 //  DETECCIÓN DE ENCABEZADOS WORD
 // ══════════════════════════════════════════════════════════════
@@ -161,6 +176,7 @@ function applyOptimizedReadingWidthForExport(clone) {
   }
   function isTextual(el) {
     if (!el || el.nodeType !== 1 || el.closest('td,th')) return false;
+    if (_isSeccionBlock(el)) return false;                 // ✅ v2.1 · excepción
     const tag = el.tagName.toLowerCase();
     if (tag === 'p' || tag === 'ul' || tag === 'ol' || tag === 'hr') return true;
     if (tag === 'div') {
@@ -191,6 +207,7 @@ function applyOptimizedReadingWidthForExport(clone) {
   // ✅ FIX E1 + E2 · <p> con merge de estilos y exclusión de <li>
   clone.querySelectorAll('p').forEach(el => {
     if (el.closest('td,th,li')) return;                    // ✅ FIX E2: no tocar <p> dentro de <li>
+    if (_isSeccionBlock(el)) return;                       // ✅ v2.1
     if (el.querySelector('img,iframe,video,audio,table,div,section,article,figure,blockquote,ul,ol,hr')) return;
     el.setAttribute('style', _mergeStyles(el.getAttribute('style'), EXPORT_TEXT_STYLE, ''));
   });
@@ -198,12 +215,14 @@ function applyOptimizedReadingWidthForExport(clone) {
   // ✅ FIX E1 + E3 · <ul>/<ol> con merge (conserva list-style, colores, etc.)
   clone.querySelectorAll('ul,ol').forEach(el => {
     if (el.closest('td,th')) return;
+    if (_isSeccionBlock(el)) return;                       // ✅ v2.1
     el.setAttribute('style', _mergeStyles(el.getAttribute('style'), EXPORT_UL_STYLE, ''));
     setBox(el, CONTENT_MAX, '18px');
   });
 
   clone.querySelectorAll('div').forEach(el => {
     if (el.closest('td,th')) return;
+    if (_isSeccionBlock(el)) return;                       // ✅ v2.1
     const first = el.firstElementChild;
     if (first && isHeadingInner(first)) setBox(el, CONTENT_MAX, '12px');
     if (isSpecialText(el) && !hasMedia(el)) setBox(el, CONTENT_MAX, '14px');
@@ -212,6 +231,7 @@ function applyOptimizedReadingWidthForExport(clone) {
 
   Array.from(clone.children).forEach(el => {
     if (!el || el.nodeType !== 1) return;
+    if (_isSeccionBlock(el)) return;                       // ✅ v2.1
     const tag = el.tagName.toLowerCase();
     if (hasMedia(el) || tag === 'table' || el.classList.contains('moodle-media-block')) {
       setBox(el, MEDIA_MAX, '24px');

@@ -546,6 +546,9 @@
    respeten el mismo carril visual:
    - Texto, encabezados, listas, separadores, definiciones y bloques didácticos: 800px.
    - Imágenes, tablas, vídeos, PDF, presentaciones y audio: 1000px.
+   EXCEPCIÓN v7.7.1: los bloques .moodle-seccion-block (botón
+   "Secciones / subsecciones Moodle") se quedan anclados a la IZQUIERDA
+   y NO se centran ni limitan a 800/1000px.
    ============================================================ */
 (function(){
   if (!window.editor) return;
@@ -556,6 +559,7 @@
   function norm(el){ return String((el && el.getAttribute && el.getAttribute('style')) || '').toLowerCase().replace(/\s+/g,''); }
   function hasMedia(el){ return !!(el && el.querySelector && el.querySelector('img,iframe,video,audio,table')); }
   function isPureImageBlock(el){ return el && el.classList && el.classList.contains('moodle-media-block') && el.querySelector('img') && !el.querySelector('iframe,video,audio,table'); }
+  function isSeccionBlock(el){ return !!(el && el.classList && el.classList.contains('moodle-seccion-block')); } // ✅ v7.7.1
   function isHeadingInner(el){
     const s = norm(el);
     return s.includes('background-color:#c0272d') || s.includes('background:#c0272d') ||
@@ -608,6 +612,14 @@
       root = root || editor;
       Array.from(root.children).forEach(el => {
         if (!el || el.nodeType !== 1) return;
+
+        // ✅ v7.7.1 · Bloques "Secciones / subsecciones Moodle":
+        //    anclados a la izquierda, sin centrado ni límite 800/1000.
+        if (isSeccionBlock(el)) {
+          el.classList.remove('moodle-content-block', 'moodle-media-block-preview');
+          return;
+        }
+
         el.classList.remove('moodle-content-block','moodle-media-block-preview');
         const tag = el.tagName.toLowerCase();
         const media = hasMedia(el) || tag === 'table' || el.classList.contains('moodle-media-block');
@@ -645,4 +657,3 @@
   editor.addEventListener('input', () => window.normalizeEditorVisualGrid(editor), true);
   setTimeout(() => window.normalizeEditorVisualGrid(editor), 0);
 })();
-
